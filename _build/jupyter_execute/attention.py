@@ -32,7 +32,7 @@ with open('HCP_movie_watching.pkl','rb') as f:
 print(TS.keys())
 
 
-# ## Dataset organization
+# ### Dataset organization
 # `TS` is a dictionary with movie names as keys
 # 
 # Value against each key is a numpy array of dimensions `[#participants, #time points, #ROIs]`
@@ -50,7 +50,7 @@ for movie_name, ts in TS.items():
     print(movie_name, ts.shape)
 
 
-# ## Padding sequences
+# ### Padding sequences
 # 
 # To deal with varying `time points`. For data with `time points < seq_length(self defined)` , I have paded them with 0s. For data with `time points > seq_length(self defined)`, I have split the data into 2 section first, into `[ : seq_length]`, second into `[data_time_point-seq_length : ]`. I have used the `seq_length = 198` (average time_point mentioned in the paper).
 # 
@@ -155,7 +155,7 @@ for movie_name, ts in TS.items():
             print(pep)
 
 
-# ## Training, Validation, Test
+# ### Training, Validation, Test
 # 
 # With the data in required shape, The following shows the split into training, validation, and test sets.
 
@@ -226,7 +226,7 @@ else:
 
 # ## Models
 
-# ## Implementing the `Attention` Model
+# ### Implementing the `Attention` Model
 # 
 # The following figures shows the idea behind it
 # 
@@ -271,7 +271,7 @@ class Attention(nn.Module):
         return torch.sum(weighted_input, 1)
 
 
-# ## `GRU Classifier` Model as described in the [paper](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008943)
+# ### `GRU Classifier` Model as described in the [paper](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008943)
 # <img src="gru.png">
 
 # In[13]:
@@ -419,7 +419,7 @@ n_layers   = 2
 lr         = 0.006
 
 
-# ## Training with Attention Layer
+# ### Training with Attention Layer
 
 # In[16]:
 
@@ -436,7 +436,7 @@ print(model)
 train(epochs,train_loader,model,valid_loader,optimizer,criterion)
 
 
-# ## Training without Attention Layer
+# ### Training without Attention Layer
 
 # In[21]:
 
@@ -483,7 +483,7 @@ def test(test_loader,net):
     print("Test accuracy: {:.3f}".format(test_acc))
 
 
-# ## Accuracy with Attention Layer
+# ### Accuracy with Attention Layer
 
 # In[19]:
 
@@ -497,7 +497,7 @@ model.load_state_dict(torch.load('RNN_GRU_Att.pt'))
 test(test_loader,model)
 
 
-# ## Accuracy without Attention Layer
+# ### Accuracy without Attention Layer
 
 # In[23]:
 
@@ -511,7 +511,7 @@ model.load_state_dict(torch.load('RNN_GRU.pt'))
 test(test_loader,model)
 
 
-# # Conclusion
+# ## Conclusion
 # 
 # Adding an Attention Layer has increased the model accuracy as expected.
 # The model furthur can be extended/improved by using other methods such as `transformers`
