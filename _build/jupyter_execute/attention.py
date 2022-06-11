@@ -11,7 +11,7 @@
 # 
 
 # ---
-# # Data
+# ## Data
 
 # **Data provided is already preprocessed but needs to be converted in model usabale format**
 
@@ -224,7 +224,7 @@ else:
     device = torch.device("cpu")
 
 
-# # Models
+# ## Models
 
 # ## Implementing the `Attention` Model
 # 
@@ -315,7 +315,7 @@ class GRU_RNN(nn.Module):
         return hidden
 
 
-# # Training
+# ## Training
 
 # In[14]:
 
@@ -453,7 +453,7 @@ print(model)
 train(epochs,train_loader,model,valid_loader,optimizer,criterion,att=False)
 
 
-# # Testing
+# ## Testing
 
 # In[18]:
 
