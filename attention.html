@@ -207,42 +207,39 @@ const thebe_selector_output = ".output, .cell_output"
             </div>
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   GRU + Attention
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   Overview
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#overview">
-     Overview
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#data">
-     Data
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data">
+   Data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#dataset-organization">
      Dataset organization
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#padding-sequences">
      Padding sequences
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#training-validation-test">
      Training, Validation, Test
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#models">
-     Models
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#models">
+   Models
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#implementing-the-attention-model">
      Implementing the
      <code class="docutils literal notranslate">
@@ -253,7 +250,7 @@ const thebe_selector_output = ".output, .cell_output"
      Model
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#gru-classifier-model-as-described-in-the-paper">
      <code class="docutils literal notranslate">
       <span class="pre">
@@ -266,39 +263,43 @@ const thebe_selector_output = ".output, .cell_output"
      Model as described in the paper
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#training">
-     Training
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#training">
+   Training
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#training-with-attention-layer">
      Training with Attention Layer
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#training-without-attention-layer">
      Training without Attention Layer
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#testing">
-     Testing
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#testing">
+   Testing
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#accuracy-with-attention-layer">
      Accuracy with Attention Layer
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#accuracy-without-attention-layer">
      Accuracy without Attention Layer
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#conclusion">
    Conclusion
   </a>
@@ -323,42 +324,39 @@ const thebe_selector_output = ".output, .cell_output"
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   GRU + Attention
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   Overview
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#overview">
-     Overview
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#data">
-     Data
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data">
+   Data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#dataset-organization">
      Dataset organization
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#padding-sequences">
      Padding sequences
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#training-validation-test">
      Training, Validation, Test
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#models">
-     Models
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#models">
+   Models
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#implementing-the-attention-model">
      Implementing the
      <code class="docutils literal notranslate">
@@ -369,7 +367,7 @@ const thebe_selector_output = ".output, .cell_output"
      Model
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#gru-classifier-model-as-described-in-the-paper">
      <code class="docutils literal notranslate">
       <span class="pre">
@@ -382,39 +380,43 @@ const thebe_selector_output = ".output, .cell_output"
      Model as described in the paper
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#training">
-     Training
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#training">
+   Training
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#training-with-attention-layer">
      Training with Attention Layer
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#training-without-attention-layer">
      Training without Attention Layer
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#testing">
-     Testing
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#testing">
+   Testing
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#accuracy-with-attention-layer">
      Accuracy with Attention Layer
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#accuracy-without-attention-layer">
      Accuracy without Attention Layer
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#conclusion">
    Conclusion
   </a>
@@ -463,9 +465,8 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-</div>
 <div class="section" id="dataset-organization">
-<h2>Dataset organization<a class="headerlink" href="#dataset-organization" title="Permalink to this headline">¶</a></h2>
+<h3>Dataset organization<a class="headerlink" href="#dataset-organization" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">TS</span></code> is a dictionary with movie names as keys</p>
 <p>Value against each key is a numpy array of dimensions <code class="docutils literal notranslate"><span class="pre">[#participants,</span> <span class="pre">#time</span> <span class="pre">points,</span> <span class="pre">#ROIs]</span></code></p>
 <p>Note that the testretest movie appears on all 4 runs for a participant, therefore the value has dimensions <code class="docutils literal notranslate"><span class="pre">[#runs,</span> <span class="pre">#participants,</span> <span class="pre">#time</span> <span class="pre">points,</span> <span class="pre">#ROIs]</span></code></p>
@@ -502,7 +503,7 @@ starwars (176, 256, 300)
 </div>
 </div>
 <div class="section" id="padding-sequences">
-<h2>Padding sequences<a class="headerlink" href="#padding-sequences" title="Permalink to this headline">¶</a></h2>
+<h3>Padding sequences<a class="headerlink" href="#padding-sequences" title="Permalink to this headline">¶</a></h3>
 <p>To deal with varying <code class="docutils literal notranslate"><span class="pre">time</span> <span class="pre">points</span></code>. For data with <code class="docutils literal notranslate"><span class="pre">time</span> <span class="pre">points</span> <span class="pre">&lt;</span> <span class="pre">seq_length(self</span> <span class="pre">defined)</span></code> , I have paded them with 0s. For data with <code class="docutils literal notranslate"><span class="pre">time</span> <span class="pre">points</span> <span class="pre">&gt;</span> <span class="pre">seq_length(self</span> <span class="pre">defined)</span></code>, I have split the data into 2 section first, into <code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">:</span> <span class="pre">seq_length]</span></code>, second into <code class="docutils literal notranslate"><span class="pre">[data_time_point-seq_length</span> <span class="pre">:</span> <span class="pre">]</span></code>. I have used the <code class="docutils literal notranslate"><span class="pre">seq_length</span> <span class="pre">=</span> <span class="pre">198</span></code> (average time_point mentioned in the paper).</p>
 <p><strong>Final <code class="docutils literal notranslate"><span class="pre">features</span></code> array is a 2D array, with shape = <code class="docutils literal notranslate"><span class="pre">(seq_length,300)</span></code>.</strong></p>
 <p>The following block shows above mentioned discussion</p>
@@ -628,7 +629,7 @@ starwars (176, 256, 300)
 </div>
 </div>
 <div class="section" id="training-validation-test">
-<h2>Training, Validation, Test<a class="headerlink" href="#training-validation-test" title="Permalink to this headline">¶</a></h2>
+<h3>Training, Validation, Test<a class="headerlink" href="#training-validation-test" title="Permalink to this headline">¶</a></h3>
 <p>With the data in required shape, The following shows the split into training, validation, and test sets.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -723,11 +724,11 @@ starwars (176, 256, 300)
 </div>
 </div>
 </div>
+</div>
 <div class="section" id="models">
 <h2>Models<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h2>
-</div>
 <div class="section" id="implementing-the-attention-model">
-<h2>Implementing the <code class="docutils literal notranslate"><span class="pre">Attention</span></code> Model<a class="headerlink" href="#implementing-the-attention-model" title="Permalink to this headline">¶</a></h2>
+<h3>Implementing the <code class="docutils literal notranslate"><span class="pre">Attention</span></code> Model<a class="headerlink" href="#implementing-the-attention-model" title="Permalink to this headline">¶</a></h3>
 <p>The following figures shows the idea behind it</p>
 <img alt="_images/attntion1.png" class="align-center" src="_images/attntion1.png" />
 <div class="cell docutils container">
@@ -771,7 +772,7 @@ starwars (176, 256, 300)
 </div>
 </div>
 <div class="section" id="gru-classifier-model-as-described-in-the-paper">
-<h2><code class="docutils literal notranslate"><span class="pre">GRU</span> <span class="pre">Classifier</span></code> Model as described in the <a class="reference external" href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008943">paper</a><a class="headerlink" href="#gru-classifier-model-as-described-in-the-paper" title="Permalink to this headline">¶</a></h2>
+<h3><code class="docutils literal notranslate"><span class="pre">GRU</span> <span class="pre">Classifier</span></code> Model as described in the <a class="reference external" href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008943">paper</a><a class="headerlink" href="#gru-classifier-model-as-described-in-the-paper" title="Permalink to this headline">¶</a></h3>
 <img alt="_images/gru.png" src="_images/gru.png" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -812,6 +813,7 @@ starwars (176, 256, 300)
         <span class="n">hidden</span> <span class="o">=</span> <span class="n">weight</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_layers</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_dim</span><span class="p">)</span><span class="o">.</span><span class="n">zero_</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">hidden</span>
 </pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -922,9 +924,8 @@ starwars (176, 256, 300)
 </div>
 </div>
 </div>
-</div>
 <div class="section" id="training-with-attention-layer">
-<h2>Training with Attention Layer<a class="headerlink" href="#training-with-attention-layer" title="Permalink to this headline">¶</a></h2>
+<h3>Training with Attention Layer<a class="headerlink" href="#training-with-attention-layer" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span>     <span class="o">=</span> <span class="n">GRU_RNN</span><span class="p">(</span><span class="n">input_dim</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">,</span> <span class="n">n_layers</span><span class="p">)</span>
@@ -1030,7 +1031,7 @@ Epoch: 45/45 	Training Loss: 1.943287 	Validation Loss: 1.979269
 </div>
 </div>
 <div class="section" id="training-without-attention-layer">
-<h2>Training without Attention Layer<a class="headerlink" href="#training-without-attention-layer" title="Permalink to this headline">¶</a></h2>
+<h3>Training without Attention Layer<a class="headerlink" href="#training-without-attention-layer" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span>     <span class="o">=</span> <span class="n">GRU_RNN</span><span class="p">(</span><span class="n">input_dim</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">,</span> <span class="n">n_layers</span><span class="p">,</span><span class="n">att</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -1117,6 +1118,7 @@ Epoch: 45/45 	Training Loss: 1.964568 	Validation Loss: 2.083749
 </div>
 </div>
 </div>
+</div>
 <div class="section" id="testing">
 <h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
@@ -1148,9 +1150,8 @@ Epoch: 45/45 	Training Loss: 1.964568 	Validation Loss: 2.083749
 </div>
 </div>
 </div>
-</div>
 <div class="section" id="accuracy-with-attention-layer">
-<h2>Accuracy with Attention Layer<a class="headerlink" href="#accuracy-with-attention-layer" title="Permalink to this headline">¶</a></h2>
+<h3>Accuracy with Attention Layer<a class="headerlink" href="#accuracy-with-attention-layer" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;RNN_GRU_Att.pt&#39;</span><span class="p">))</span>
@@ -1177,7 +1178,7 @@ Epoch: 45/45 	Training Loss: 1.964568 	Validation Loss: 2.083749
 </div>
 </div>
 <div class="section" id="accuracy-without-attention-layer">
-<h2>Accuracy without Attention Layer<a class="headerlink" href="#accuracy-without-attention-layer" title="Permalink to this headline">¶</a></h2>
+<h3>Accuracy without Attention Layer<a class="headerlink" href="#accuracy-without-attention-layer" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;RNN_GRU.pt&#39;</span><span class="p">))</span>
@@ -1204,10 +1205,11 @@ Epoch: 45/45 	Training Loss: 1.964568 	Validation Loss: 2.083749
 </div>
 </div>
 </div>
-<div class="tex2jax_ignore mathjax_ignore section" id="conclusion">
-<h1>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
 <p>Adding an Attention Layer has increased the model accuracy as expected.
 The model furthur can be extended/improved by using other methods such as <code class="docutils literal notranslate"><span class="pre">transformers</span></code></p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
