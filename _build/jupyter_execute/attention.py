@@ -445,7 +445,7 @@ print(model)
 train_losses,valid_losses,tr_acc,val_acc,best_epoch = train(epochs,train_loader,model,valid_loader,optimizer,criterion)
 
 
-# In[19]:
+# In[41]:
 
 
 import matplotlib.pyplot as plt
@@ -471,7 +471,7 @@ axis[1].plot(x,tr_acc)
 axis[1].plot(x,val_acc)
 axis[1].set_xticks(xi)
 axis[1].set_xlabel("Epochs", fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
-axis[1].set_ylabel("Accuracies",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
+axis[1].set_ylabel("Accuracy",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
 axis[1].set_title("Accuracies (with Attention)",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
 axis[1].legend(["Training Accuracy","Valid Accuracy"]);
 
@@ -493,7 +493,7 @@ print(model)
 train_losses_1,valid_losses_1,tr_acc_1,val_acc_1,best_epoch_1= train(epochs,train_loader,model,valid_loader,optimizer,criterion,att=False)
 
 
-# In[22]:
+# In[42]:
 
 
 f, axis = plt.subplots(2,1)
@@ -507,7 +507,7 @@ axis[0].axvline(best_epoch, color='black')
 axis[0].set_xticks(xi)
 axis[0].set_xlabel("Epochs",fontweight="bold",color = 'Black', fontsize='15', horizontalalignment='center')
 axis[0].set_ylabel("Loss",fontweight="bold",color = 'Black', fontsize='15', horizontalalignment='center')
-axis[0].set_title("Losses (with Attention)",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
+axis[0].set_title("Losses (without Attention)",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
 axis[0].legend(["Training Loss","Valid Loss",f"Best Epoch= {best_epoch_1}"])
 
 
@@ -516,7 +516,7 @@ axis[1].plot(x,val_acc_1)
 axis[1].set_xticks(xi)
 axis[1].set_xlabel("Epochs", fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
 axis[1].set_ylabel("Accuracies",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
-axis[1].set_title("Accuracies (with Attention)",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
+axis[1].set_title("Accuracy (without Attention)",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
 axis[1].legend(["Training Accuracy","Valid Accuracy"]);
 
 
