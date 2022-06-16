@@ -24,7 +24,7 @@ import numpy as np
 import torch.nn as nn
 
 
-# In[3]:
+# In[2]:
 
 
 with open('HCP_movie_watching.pkl','rb') as f:
@@ -39,7 +39,7 @@ print(TS.keys())
 # 
 # Note that the testretest movie appears on all 4 runs for a participant, therefore the value has dimensions `[#runs, #participants, #time points, #ROIs]`
 
-# In[4]:
+# In[3]:
 
 
 rel = {}
@@ -58,7 +58,7 @@ for movie_name, ts in TS.items():
 # 
 # The following block shows above mentioned discussion
 
-# In[5]:
+# In[4]:
 
 
 train_feature = []
@@ -159,7 +159,7 @@ for movie_name, ts in TS.items():
 # 
 # With the data in required shape, The following shows the split into training, validation, and test sets.
 
-# In[6]:
+# In[5]:
 
 
 from torch.utils.data import TensorDataset, DataLoader
@@ -168,13 +168,13 @@ train_data = TensorDataset(torch.from_numpy(np.array(train_feature)).float(),tor
 test_data  = TensorDataset(torch.from_numpy(np.array(test_feature)).float(),torch.from_numpy(np.array(test_target)).float())
 
 
-# In[7]:
+# In[6]:
 
 
 len(train_data),len(test_data)
 
 
-# In[8]:
+# In[7]:
 
 
 from torch.utils.data.sampler import SubsetRandomSampler
@@ -195,25 +195,25 @@ valid_loader  = DataLoader(train_data,sampler=valid_sampler,batch_size=batch_siz
 test_loader   = DataLoader(test_data, batch_size=batch_size,shuffle = True)
 
 
-# In[9]:
+# In[8]:
 
 
 len(valid)
 
 
-# In[10]:
+# In[9]:
 
 
 len(train_loader),len(valid_loader),len(test_loader)
 
 
-# In[11]:
+# In[10]:
 
 
 iter(train_loader).next()[0].shape
 
 
-# In[12]:
+# In[11]:
 
 
 is_cuda = torch.cuda.is_available()
@@ -233,7 +233,7 @@ else:
 # 
 # <img src="attntion1.png" align="center">
 
-# In[14]:
+# In[12]:
 
 
 class Attention(nn.Module):
@@ -281,7 +281,7 @@ class Attention(nn.Module):
 # ### `GRU Classifier` Model as described in the [paper](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008943) with added normalization layers
 # <img src="gru.png">
 
-# In[16]:
+# In[13]:
 
 
 class GRU_RNN(nn.Module):
@@ -326,17 +326,20 @@ class GRU_RNN(nn.Module):
 
 # ## Training
 
-# In[18]:
+# In[14]:
 
 
 def train(epochs,train_loader,net,valid_loader,optimzer,criterion,att=True):
+    val_acc = []
+    tr_acc = []
     
     clip = 3 # gradient clipping
-    
+
     net.to(device)
     net.train()
-
+    
     valid_loss_min = np.Inf 
+    
     valid_losses = []
     train_losses = []
     
@@ -345,7 +348,8 @@ def train(epochs,train_loader,net,valid_loader,optimzer,criterion,att=True):
         h = net.init_hidden(batch_size)
         train_loss = []
         valid_loss = []
-        
+        train_acc  = 0.0
+        valid_acc  = 0.0 
         counter = 0
         for inputs, labels in train_loader:
             counter += 1
@@ -362,14 +366,18 @@ def train(epochs,train_loader,net,valid_loader,optimzer,criterion,att=True):
             correct = np.squeeze(correct_tensor.to('cpu').numpy())
             num_correct += np.sum(correct)
 
+
             loss = criterion(output, labels)
             loss.backward()
             nn.utils.clip_grad_norm_(net.parameters(), clip)
             optimizer.step()
+
             train_loss.append(loss.item())
+        tr_acc.append(num_correct/(len(train_loader.dataset)))
 
 
 
+        acc = 0.0
         val_h = net.init_hidden(batch_size)
         val_losses = []
         net.eval()
@@ -382,11 +390,14 @@ def train(epochs,train_loader,net,valid_loader,optimzer,criterion,att=True):
             inputs, labels = inputs.to(device), labels.type(torch.LongTensor).to(device)
 
             output, val_h = net(inputs, val_h)
+            
             pred = torch.round(output.squeeze()) 
             top_value, top_index = torch.max(pred,1)
             correct_tensor = top_index.eq(labels.float().view_as(top_index))
             correct = np.squeeze(correct_tensor.to('cpu').numpy())
             num_correct += np.sum(correct)
+            acc = num_correct/(len(train_loader.dataset))
+            valid_acc += acc.item()
 
             val_loss = criterion(output.squeeze(),labels)
             val_losses.append(val_loss.item())
@@ -401,12 +412,12 @@ def train(epochs,train_loader,net,valid_loader,optimzer,criterion,att=True):
         net.train()
         valid_losses.append(np.mean(val_losses))
         train_losses.append(np.mean(train_loss))
-        
+        val_acc.append(valid_acc/len(valid_loader))
         print('Epoch: {}/{} \tTraining Loss: {:.6f} \tValidation Loss: {:.6f}'.format(e+1,epochs,np.mean(train_loss),np.mean(val_losses)))
-    return train_losses,valid_losses 
+    return train_losses,valid_losses,tr_acc,val_acc
 
 
-# In[19]:
+# In[15]:
 
 
 epochs     = 55
@@ -419,7 +430,7 @@ lr         = 0.006
 
 # ### Training with Attention Layer
 
-# In[29]:
+# In[16]:
 
 
 model     = GRU_RNN(input_dim, output_dim, hidden_dim, n_layers)
@@ -428,15 +439,49 @@ criterion = nn.CrossEntropyLoss()
 print(model)
 
 
-# In[21]:
+# In[17]:
 
 
-train_losses,valid_losses = train(epochs,train_loader,model,valid_loader,optimizer,criterion)
+train_losses,valid_losses,tr_acc,val_acc = train(epochs,train_loader,model,valid_loader,optimizer,criterion)
+
+
+# In[18]:
+
+
+import matplotlib.pyplot as plt
+f = plt.figure()
+f.set_figwidth(20)
+f.set_figheight(5)
+x  = [i for i in range(1,epochs+1)]
+xi = [i for i in range(0,epochs+5,5)]
+xi[0] = 1
+plt.plot(x,train_losses)
+plt.plot(x,valid_losses)
+plt.xticks(xi)
+plt.xlabel("Epochs", fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
+plt.ylabel("Loss",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
+plt.title("Losses (with Attention)",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
+plt.legend(["Training Loss","Valid Loss"]);
+
+
+# In[19]:
+
+
+f = plt.figure()
+f.set_figwidth(20)
+f.set_figheight(5)
+plt.plot(x,tr_acc)
+plt.plot(x,val_acc)
+plt.xticks(xi)
+plt.xlabel("Epochs", fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
+plt.ylabel("Accuracies",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
+plt.title("Accuracies (with Attention)",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
+plt.legend(["Training Accuracy","Valid Accuracy"]);
 
 
 # ### Training without Attention Layer
 
-# In[22]:
+# In[20]:
 
 
 model     = GRU_RNN(input_dim, output_dim, hidden_dim, n_layers,att=False)
@@ -445,10 +490,40 @@ criterion = nn.CrossEntropyLoss()
 print(model)
 
 
+# In[21]:
+
+
+train_losses_1,valid_losses_1,tr_acc_1,val_acc_1= train(epochs,train_loader,model,valid_loader,optimizer,criterion,att=False)
+
+
+# In[22]:
+
+
+f = plt.figure()
+f.set_figwidth(20)
+f.set_figheight(5)
+plt.plot(x,train_losses_1)
+plt.plot(x,valid_losses_1)
+plt.xticks(xi)
+plt.xlabel("Epochs", fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
+plt.ylabel("Loss",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
+plt.title("Losses (without Attention)",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
+plt.legend(["Training Loss","Valid Loss"]);
+
+
 # In[23]:
 
 
-train_losses,valid_losses = train(epochs,train_loader,model,valid_loader,optimizer,criterion,att=False)
+f = plt.figure()
+f.set_figwidth(20)
+f.set_figheight(5)
+plt.plot([i for i in range(1,epochs+1)],tr_acc_1)
+plt.plot([i for i in range(1,epochs+1)],val_acc_1)
+plt.xticks(xi)
+plt.xlabel("Epochs", fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
+plt.ylabel("Accuracies",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
+plt.title("Accuracies (without Attention)",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
+plt.legend(["Training Accuracy","Valid Accuracy"]);
 
 
 # ## Testing
@@ -484,13 +559,14 @@ def test(test_loader,net):
 
 # ### Accuracy with Attention Layer
 
-# In[41]:
+# In[26]:
 
 
+model = GRU_RNN(input_dim, output_dim, hidden_dim, n_layers)
 model.load_state_dict(torch.load('RNN_GRU_Att.pt'))
 
 
-# In[42]:
+# In[27]:
 
 
 test(test_loader,model)
@@ -498,13 +574,14 @@ test(test_loader,model)
 
 # ### Accuracy without Attention Layer
 
-# In[27]:
+# In[28]:
 
 
+model = GRU_RNN(input_dim, output_dim, hidden_dim, n_layers,att=False)
 model.load_state_dict(torch.load('RNN_GRU.pt'))
 
 
-# In[28]:
+# In[29]:
 
 
 test(test_loader,model)
