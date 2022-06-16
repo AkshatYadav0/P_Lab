@@ -324,7 +324,7 @@ class GRU_RNN(nn.Module):
         return hidden
 
 
-# ## Training (with normalization)
+# ## Training
 
 # In[18]:
 
@@ -451,7 +451,7 @@ print(model)
 train_losses,valid_losses = train(epochs,train_loader,model,valid_loader,optimizer,criterion,att=False)
 
 
-# ## Testing (with normalization)
+# ## Testing
 
 # In[24]:
 
@@ -484,13 +484,13 @@ def test(test_loader,net):
 
 # ### Accuracy with Attention Layer
 
-# In[36]:
+# In[41]:
 
 
 model.load_state_dict(torch.load('RNN_GRU_Att.pt'))
 
 
-# In[40]:
+# In[42]:
 
 
 test(test_loader,model)
