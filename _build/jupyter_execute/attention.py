@@ -373,7 +373,7 @@ def train(epochs,train_loader,net,valid_loader,optimzer,criterion,att=True):
             optimizer.step()
 
             train_loss.append(loss.item())
-        tr_acc.append(num_correct/(len(train_loader.dataset)))
+        tr_acc.append(num_correct/((len(train_loader)-1)*batch_size))
 
 
 
@@ -381,11 +381,11 @@ def train(epochs,train_loader,net,valid_loader,optimzer,criterion,att=True):
         val_h = net.init_hidden(batch_size)
         val_losses = []
         net.eval()
+        num_correct = 0
         v_c = 0
         for inputs, labels in valid_loader:
             v_c += 1
-            #if (v_c == 14):
-            #    continue
+            
             val_h = val_h.data
             inputs, labels = inputs.to(device), labels.type(torch.LongTensor).to(device)
 
@@ -396,13 +396,13 @@ def train(epochs,train_loader,net,valid_loader,optimzer,criterion,att=True):
             correct_tensor = top_index.eq(labels.float().view_as(top_index))
             correct = np.squeeze(correct_tensor.to('cpu').numpy())
             num_correct += np.sum(correct)
-            acc = num_correct/(len(train_loader.dataset))
-            valid_acc += acc.item()
 
             val_loss = criterion(output.squeeze(),labels)
             val_losses.append(val_loss.item())
+            
             if val_loss.item() <= valid_loss_min:
                 print('Validation loss decreased ({:.6f} --> {:.6f}).  Saving model ...'.format(valid_loss_min, val_loss.item()))
+                best_epoch = e
                 if att:
                     torch.save(net.state_dict(), 'RNN_GRU_Att.pt')
                 else:
@@ -412,9 +412,9 @@ def train(epochs,train_loader,net,valid_loader,optimzer,criterion,att=True):
         net.train()
         valid_losses.append(np.mean(val_losses))
         train_losses.append(np.mean(train_loss))
-        val_acc.append(valid_acc/len(valid_loader))
+        val_acc.append(num_correct/(len(valid_loader)*batch_size))
         print('Epoch: {}/{} \tTraining Loss: {:.6f} \tValidation Loss: {:.6f}'.format(e+1,epochs,np.mean(train_loss),np.mean(val_losses)))
-    return train_losses,valid_losses,tr_acc,val_acc
+    return train_losses,valid_losses,tr_acc,val_acc,best_epoch
 
 
 # In[15]:
@@ -442,41 +442,38 @@ print(model)
 # In[17]:
 
 
-train_losses,valid_losses,tr_acc,val_acc = train(epochs,train_loader,model,valid_loader,optimizer,criterion)
-
-
-# In[18]:
-
-
-import matplotlib.pyplot as plt
-f = plt.figure()
-f.set_figwidth(20)
-f.set_figheight(5)
-x  = [i for i in range(1,epochs+1)]
-xi = [i for i in range(0,epochs+5,5)]
-xi[0] = 1
-plt.plot(x,train_losses)
-plt.plot(x,valid_losses)
-plt.xticks(xi)
-plt.xlabel("Epochs", fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
-plt.ylabel("Loss",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
-plt.title("Losses (with Attention)",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
-plt.legend(["Training Loss","Valid Loss"]);
+train_losses,valid_losses,tr_acc,val_acc,best_epoch = train(epochs,train_loader,model,valid_loader,optimizer,criterion)
 
 
 # In[19]:
 
 
-f = plt.figure()
+import matplotlib.pyplot as plt
+x     = [i for i in range(1,epochs+1)]
+xi    = [i for i in range(0,epochs+5,5)]
+xi[0] = 1
+f, axis = plt.subplots(2,1)
 f.set_figwidth(20)
-f.set_figheight(5)
-plt.plot(x,tr_acc)
-plt.plot(x,val_acc)
-plt.xticks(xi)
-plt.xlabel("Epochs", fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
-plt.ylabel("Accuracies",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
-plt.title("Accuracies (with Attention)",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
-plt.legend(["Training Accuracy","Valid Accuracy"]);
+f.set_figheight(12)
+plt.subplots_adjust(top=0.8, wspace=0.2,hspace=0.3)
+
+axis[0].plot(x,train_losses)
+axis[0].plot(x,valid_losses)
+axis[0].axvline(best_epoch, color='black')
+axis[0].set_xticks(xi)
+axis[0].set_xlabel("Epochs",fontweight="bold",color = 'Black', fontsize='15', horizontalalignment='center')
+axis[0].set_ylabel("Loss",fontweight="bold",color = 'Black', fontsize='15', horizontalalignment='center')
+axis[0].set_title("Losses (with Attention)",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
+axis[0].legend(["Training Loss","Valid Loss",f"Best Epoch= {best_epoch}"])
+
+
+axis[1].plot(x,tr_acc)
+axis[1].plot(x,val_acc)
+axis[1].set_xticks(xi)
+axis[1].set_xlabel("Epochs", fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
+axis[1].set_ylabel("Accuracies",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
+axis[1].set_title("Accuracies (with Attention)",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
+axis[1].legend(["Training Accuracy","Valid Accuracy"]);
 
 
 # ### Training without Attention Layer
@@ -493,48 +490,45 @@ print(model)
 # In[21]:
 
 
-train_losses_1,valid_losses_1,tr_acc_1,val_acc_1= train(epochs,train_loader,model,valid_loader,optimizer,criterion,att=False)
+train_losses_1,valid_losses_1,tr_acc_1,val_acc_1,best_epoch_1= train(epochs,train_loader,model,valid_loader,optimizer,criterion,att=False)
 
 
 # In[22]:
 
 
-f = plt.figure()
+f, axis = plt.subplots(2,1)
 f.set_figwidth(20)
-f.set_figheight(5)
-plt.plot(x,train_losses_1)
-plt.plot(x,valid_losses_1)
-plt.xticks(xi)
-plt.xlabel("Epochs", fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
-plt.ylabel("Loss",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
-plt.title("Losses (without Attention)",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
-plt.legend(["Training Loss","Valid Loss"]);
+f.set_figheight(12)
+plt.subplots_adjust(top=0.8, wspace=0.2,hspace=0.3)
+
+axis[0].plot(x,train_losses_1)
+axis[0].plot(x,valid_losses_1)
+axis[0].axvline(best_epoch, color='black')
+axis[0].set_xticks(xi)
+axis[0].set_xlabel("Epochs",fontweight="bold",color = 'Black', fontsize='15', horizontalalignment='center')
+axis[0].set_ylabel("Loss",fontweight="bold",color = 'Black', fontsize='15', horizontalalignment='center')
+axis[0].set_title("Losses (with Attention)",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
+axis[0].legend(["Training Loss","Valid Loss",f"Best Epoch= {best_epoch_1}"])
 
 
-# In[23]:
-
-
-f = plt.figure()
-f.set_figwidth(20)
-f.set_figheight(5)
-plt.plot([i for i in range(1,epochs+1)],tr_acc_1)
-plt.plot([i for i in range(1,epochs+1)],val_acc_1)
-plt.xticks(xi)
-plt.xlabel("Epochs", fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
-plt.ylabel("Accuracies",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
-plt.title("Accuracies (without Attention)",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
-plt.legend(["Training Accuracy","Valid Accuracy"]);
+axis[1].plot(x,tr_acc_1)
+axis[1].plot(x,val_acc_1)
+axis[1].set_xticks(xi)
+axis[1].set_xlabel("Epochs", fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
+axis[1].set_ylabel("Accuracies",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
+axis[1].set_title("Accuracies (with Attention)",fontweight='bold',color = 'Black', fontsize='15', horizontalalignment='center')
+axis[1].legend(["Training Accuracy","Valid Accuracy"]);
 
 
 # ## Testing
 
-# In[24]:
+# In[23]:
 
 
 def test(test_loader,net):
     v_c = 0
-    net.eval()
     net.to(device)
+    net.eval()
     num_correct = 0
     valid_acc = 0
     h = net.init_hidden(batch_size)
@@ -544,7 +538,7 @@ def test(test_loader,net):
             continue
         h = h.data
         inputs, labels = inputs.to(device), labels.type(torch.LongTensor).to(device)
-
+        
         output, h = net(inputs, h)
 
         pred = torch.round(output.squeeze()) 
@@ -553,20 +547,20 @@ def test(test_loader,net):
         correct = np.squeeze(correct_tensor.to('cpu').numpy())
         num_correct += np.sum(correct)
     
-    test_acc = num_correct/len(test_loader.dataset)
-    print("Test accuracy: {:.3f}".format(test_acc))
+    test_acc = num_correct/((len(test_loader)-1)*batch_size)
+    print("Test accuracy: {:.3f} %".format(test_acc*100))
 
 
 # ### Accuracy with Attention Layer
 
-# In[26]:
+# In[39]:
 
 
 model = GRU_RNN(input_dim, output_dim, hidden_dim, n_layers)
 model.load_state_dict(torch.load('RNN_GRU_Att.pt'))
 
 
-# In[27]:
+# In[38]:
 
 
 test(test_loader,model)
@@ -574,14 +568,14 @@ test(test_loader,model)
 
 # ### Accuracy without Attention Layer
 
-# In[28]:
+# In[26]:
 
 
 model = GRU_RNN(input_dim, output_dim, hidden_dim, n_layers,att=False)
 model.load_state_dict(torch.load('RNN_GRU.pt'))
 
 
-# In[29]:
+# In[27]:
 
 
 test(test_loader,model)
