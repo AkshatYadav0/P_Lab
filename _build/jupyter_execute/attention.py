@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # GRU + Attention
+# # GRU + Attention (with normalization)
 
 # ## Overview
 
-# **This notebook extends the GRU Classifier model (movie watching) described in the [paper](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008943)  by adding an `Attention Layer`**
+# **This notebook extends the GRU Classifier model (movie watching) described in the [paper](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008943)  by adding an `Attention Layer` and normalization**
 # 
 # Attention was first presented by Dzmitry Bahdanau, et al. in their paper [Neural Machine Translation by Jointly Learning to Align and Translate](https://arxiv.org/abs/1409.0473).
 # 
@@ -24,7 +24,7 @@ import numpy as np
 import torch.nn as nn
 
 
-# In[2]:
+# In[3]:
 
 
 with open('HCP_movie_watching.pkl','rb') as f:
@@ -39,7 +39,7 @@ print(TS.keys())
 # 
 # Note that the testretest movie appears on all 4 runs for a participant, therefore the value has dimensions `[#runs, #participants, #time points, #ROIs]`
 
-# In[3]:
+# In[4]:
 
 
 rel = {}
@@ -58,7 +58,7 @@ for movie_name, ts in TS.items():
 # 
 # The following block shows above mentioned discussion
 
-# In[4]:
+# In[5]:
 
 
 train_feature = []
@@ -159,7 +159,7 @@ for movie_name, ts in TS.items():
 # 
 # With the data in required shape, The following shows the split into training, validation, and test sets.
 
-# In[5]:
+# In[6]:
 
 
 from torch.utils.data import TensorDataset, DataLoader
@@ -168,13 +168,13 @@ train_data = TensorDataset(torch.from_numpy(np.array(train_feature)).float(),tor
 test_data  = TensorDataset(torch.from_numpy(np.array(test_feature)).float(),torch.from_numpy(np.array(test_target)).float())
 
 
-# In[6]:
+# In[7]:
 
 
 len(train_data),len(test_data)
 
 
-# In[7]:
+# In[8]:
 
 
 from torch.utils.data.sampler import SubsetRandomSampler
@@ -195,25 +195,25 @@ valid_loader  = DataLoader(train_data,sampler=valid_sampler,batch_size=batch_siz
 test_loader   = DataLoader(test_data, batch_size=batch_size,shuffle = True)
 
 
-# In[8]:
+# In[9]:
 
 
 len(valid)
 
 
-# In[9]:
+# In[10]:
 
 
 len(train_loader),len(valid_loader),len(test_loader)
 
 
-# In[10]:
+# In[11]:
 
 
 iter(train_loader).next()[0].shape
 
 
-# In[11]:
+# In[12]:
 
 
 is_cuda = torch.cuda.is_available()
@@ -228,12 +228,12 @@ else:
 
 # ### Implementing the `Attention` Model
 # 
-# The following figures shows the idea behind it
+# The following figures shows the idea behind it (normalization layers are not shown)
 # 
 # 
 # <img src="attntion1.png" align="center">
 
-# In[12]:
+# In[14]:
 
 
 class Attention(nn.Module):
@@ -247,19 +247,25 @@ class Attention(nn.Module):
         
         weight = torch.zeros(hidden_dim, 1)
         nn.init.kaiming_uniform_(weight)
-        self.weight = nn.Parameter(weight)
+        
+        context = torch.zeros(seq_len,seq_len)
+        nn.init.kaiming_uniform_(context)
+        
+        self.context = nn.Parameter(context)
+        self.weight  = nn.Parameter(weight)
         
         if bias:
             self.b = nn.Parameter(torch.zeros(seq_len))
         
-    def forward(self, x, mask=None):
+    def forward(self, x,mask=None):
 
-        eij = torch.mm(x.contiguous().view(-1, self.hidden_dim ), self.weight).view(-1, self.seq_len)
-        
+        eij = torch.mm(x.contiguous().view(-1, self.hidden_dim ), self.weight).view(-1,self.seq_len)
         if self.bias:
-            eij = eij + self.b
-            
+            eij = eij + self.b    
         eij = torch.tanh(eij)
+        
+        eij = torch.mm(eij,self.context)
+        eij = torch.nn.functional.normalize(eij,p=2.0,dim=0)
         a = torch.exp(eij)
         
         if mask is not None:
@@ -267,14 +273,15 @@ class Attention(nn.Module):
 
         a = a / (torch.sum(a, 1, keepdim=True) + 1e-10)
         weighted_input = x * torch.unsqueeze(a, -1)
+        weighted_input = torch.nn.functional.normalize(weighted_input,p=2.0,dim=0)
         
         return torch.sum(weighted_input, 1)
 
 
-# ### `GRU Classifier` Model as described in the [paper](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008943)
+# ### `GRU Classifier` Model as described in the [paper](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008943) with added normalization layers
 # <img src="gru.png">
 
-# In[13]:
+# In[16]:
 
 
 class GRU_RNN(nn.Module):
@@ -295,13 +302,15 @@ class GRU_RNN(nn.Module):
         self.dropout   = nn.Dropout(0.3)
         self.func      = nn.Softmax(dim = -1)
 
-    def forward(self, x, hidden):
+    def forward(self, x, hidden,encoder_x=0):
         x,hidden = self.gru(x,hidden)
-        
+
         if self.att:
             x = self.attention(x)
         else:
             x = x[:, -1, :]
+        
+        x = torch.nn.functional.normalize(x,dim=0)
         
         x = self.dropout(x)
         x = self.linear(x)
@@ -315,33 +324,28 @@ class GRU_RNN(nn.Module):
         return hidden
 
 
-# ## Training
+# ## Training (with normalization)
 
-# In[14]:
+# In[18]:
 
 
 def train(epochs,train_loader,net,valid_loader,optimzer,criterion,att=True):
-    val_acc = []
-    tr_acc = []
     
+    clip = 3 # gradient clipping
     
-    print_every = 50
-    clip = 5 # gradient clipping
-
     net.to(device)
+    net.train()
 
     valid_loss_min = np.Inf 
-    
-    net.train()
     valid_losses = []
     train_losses = []
+    
     for e in range(epochs):
         num_correct = 0
         h = net.init_hidden(batch_size)
         train_loss = []
         valid_loss = []
-        train_acc  = 0.0
-        valid_acc  = 0.0 
+        
         counter = 0
         for inputs, labels in train_loader:
             counter += 1
@@ -358,18 +362,14 @@ def train(epochs,train_loader,net,valid_loader,optimzer,criterion,att=True):
             correct = np.squeeze(correct_tensor.to('cpu').numpy())
             num_correct += np.sum(correct)
 
-
             loss = criterion(output, labels)
             loss.backward()
             nn.utils.clip_grad_norm_(net.parameters(), clip)
             optimizer.step()
-
             train_loss.append(loss.item())
-        tr_acc.append(num_correct/(len(train_loader.dataset)))
 
 
 
-        acc = 0.0
         val_h = net.init_hidden(batch_size)
         val_losses = []
         net.eval()
@@ -382,14 +382,11 @@ def train(epochs,train_loader,net,valid_loader,optimzer,criterion,att=True):
             inputs, labels = inputs.to(device), labels.type(torch.LongTensor).to(device)
 
             output, val_h = net(inputs, val_h)
-            
             pred = torch.round(output.squeeze()) 
             top_value, top_index = torch.max(pred,1)
             correct_tensor = top_index.eq(labels.float().view_as(top_index))
             correct = np.squeeze(correct_tensor.to('cpu').numpy())
             num_correct += np.sum(correct)
-            acc = num_correct/(len(train_loader.dataset))
-            valid_acc += acc.item()
 
             val_loss = criterion(output.squeeze(),labels)
             val_losses.append(val_loss.item())
@@ -404,14 +401,15 @@ def train(epochs,train_loader,net,valid_loader,optimzer,criterion,att=True):
         net.train()
         valid_losses.append(np.mean(val_losses))
         train_losses.append(np.mean(train_loss))
-        val_acc.append(valid_acc/len(valid_loader))
+        
         print('Epoch: {}/{} \tTraining Loss: {:.6f} \tValidation Loss: {:.6f}'.format(e+1,epochs,np.mean(train_loss),np.mean(val_losses)))
+    return train_losses,valid_losses 
 
 
-# In[15]:
+# In[19]:
 
 
-epochs     = 45 
+epochs     = 55
 input_dim  = 300
 hidden_dim = 32
 output_dim = 15
@@ -421,7 +419,7 @@ lr         = 0.006
 
 # ### Training with Attention Layer
 
-# In[16]:
+# In[29]:
 
 
 model     = GRU_RNN(input_dim, output_dim, hidden_dim, n_layers)
@@ -430,15 +428,15 @@ criterion = nn.CrossEntropyLoss()
 print(model)
 
 
-# In[17]:
+# In[21]:
 
 
-train(epochs,train_loader,model,valid_loader,optimizer,criterion)
+train_losses,valid_losses = train(epochs,train_loader,model,valid_loader,optimizer,criterion)
 
 
 # ### Training without Attention Layer
 
-# In[21]:
+# In[22]:
 
 
 model     = GRU_RNN(input_dim, output_dim, hidden_dim, n_layers,att=False)
@@ -447,20 +445,21 @@ criterion = nn.CrossEntropyLoss()
 print(model)
 
 
-# In[22]:
+# In[23]:
 
 
-train(epochs,train_loader,model,valid_loader,optimizer,criterion,att=False)
+train_losses,valid_losses = train(epochs,train_loader,model,valid_loader,optimizer,criterion,att=False)
 
 
-# ## Testing
+# ## Testing (with normalization)
 
-# In[18]:
+# In[24]:
 
 
 def test(test_loader,net):
     v_c = 0
     net.eval()
+    net.to(device)
     num_correct = 0
     valid_acc = 0
     h = net.init_hidden(batch_size)
@@ -485,13 +484,13 @@ def test(test_loader,net):
 
 # ### Accuracy with Attention Layer
 
-# In[19]:
+# In[36]:
 
 
 model.load_state_dict(torch.load('RNN_GRU_Att.pt'))
 
 
-# In[20]:
+# In[40]:
 
 
 test(test_loader,model)
@@ -499,13 +498,13 @@ test(test_loader,model)
 
 # ### Accuracy without Attention Layer
 
-# In[23]:
+# In[27]:
 
 
 model.load_state_dict(torch.load('RNN_GRU.pt'))
 
 
-# In[24]:
+# In[28]:
 
 
 test(test_loader,model)

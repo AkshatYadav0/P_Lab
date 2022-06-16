@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GRU + Attention &#8212; Lab Works</title>
+    <title>GRU + Attention (with normalization) &#8212; Lab Works</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -100,7 +100,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   GRU + Attention
+   GRU + Attention (with normalization)
   </a>
  </li>
 </ul>
@@ -251,7 +251,7 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#gru-classifier-model-as-described-in-the-paper">
+    <a class="reference internal nav-link" href="#gru-classifier-model-as-described-in-the-paper-with-added-normalization-layers">
      <code class="docutils literal notranslate">
       <span class="pre">
        GRU
@@ -260,14 +260,14 @@ const thebe_selector_output = ".output, .cell_output"
        Classifier
       </span>
      </code>
-     Model as described in the paper
+     Model as described in the paper with added normalization layers
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#training">
-   Training
+  <a class="reference internal nav-link" href="#training-with-normalization">
+   Training (with normalization)
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -283,8 +283,8 @@ const thebe_selector_output = ".output, .cell_output"
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#testing">
-   Testing
+  <a class="reference internal nav-link" href="#testing-with-normalization">
+   Testing (with normalization)
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -314,7 +314,7 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>GRU + Attention</h1>
+                <h1>GRU + Attention (with normalization)</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -368,7 +368,7 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#gru-classifier-model-as-described-in-the-paper">
+    <a class="reference internal nav-link" href="#gru-classifier-model-as-described-in-the-paper-with-added-normalization-layers">
      <code class="docutils literal notranslate">
       <span class="pre">
        GRU
@@ -377,14 +377,14 @@ const thebe_selector_output = ".output, .cell_output"
        Classifier
       </span>
      </code>
-     Model as described in the paper
+     Model as described in the paper with added normalization layers
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#training">
-   Training
+  <a class="reference internal nav-link" href="#training-with-normalization">
+   Training (with normalization)
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -400,8 +400,8 @@ const thebe_selector_output = ".output, .cell_output"
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#testing">
-   Testing
+  <a class="reference internal nav-link" href="#testing-with-normalization">
+   Testing (with normalization)
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -430,11 +430,11 @@ const thebe_selector_output = ".output, .cell_output"
             
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="gru-attention">
-<h1>GRU + Attention<a class="headerlink" href="#gru-attention" title="Permalink to this headline">¶</a></h1>
+  <div class="tex2jax_ignore mathjax_ignore section" id="gru-attention-with-normalization">
+<h1>GRU + Attention (with normalization)<a class="headerlink" href="#gru-attention-with-normalization" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p><strong>This notebook extends the GRU Classifier model (movie watching) described in the <a class="reference external" href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008943">paper</a>  by adding an <code class="docutils literal notranslate"><span class="pre">Attention</span> <span class="pre">Layer</span></code></strong></p>
+<p><strong>This notebook extends the GRU Classifier model (movie watching) described in the <a class="reference external" href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008943">paper</a>  by adding an <code class="docutils literal notranslate"><span class="pre">Attention</span> <span class="pre">Layer</span></code> and normalization</strong></p>
 <p>Attention was first presented by Dzmitry Bahdanau, et al. in their paper <a class="reference external" href="https://arxiv.org/abs/1409.0473">Neural Machine Translation by Jointly Learning to Align and Translate</a>.</p>
 </div>
 <hr class="docutils" />
@@ -729,7 +729,7 @@ starwars (176, 256, 300)
 <h2>Models<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="implementing-the-attention-model">
 <h3>Implementing the <code class="docutils literal notranslate"><span class="pre">Attention</span></code> Model<a class="headerlink" href="#implementing-the-attention-model" title="Permalink to this headline">¶</a></h3>
-<p>The following figures shows the idea behind it</p>
+<p>The following figures shows the idea behind it (normalization layers are not shown)</p>
 <img alt="_images/attntion1.png" class="align-center" src="_images/attntion1.png" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -744,19 +744,25 @@ starwars (176, 256, 300)
         
         <span class="n">weight</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">kaiming_uniform_</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span>
+        
+        <span class="n">context</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">seq_len</span><span class="p">,</span><span class="n">seq_len</span><span class="p">)</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">kaiming_uniform_</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weight</span>  <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="n">bias</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">seq_len</span><span class="p">))</span>
         
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span><span class="n">mask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 
-        <span class="n">eij</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mm</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_dim</span> <span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span><span class="p">)</span>
-        
+        <span class="n">eij</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mm</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_dim</span> <span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="p">:</span>
-            <span class="n">eij</span> <span class="o">=</span> <span class="n">eij</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span>
-            
+            <span class="n">eij</span> <span class="o">=</span> <span class="n">eij</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span>    
         <span class="n">eij</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">eij</span><span class="p">)</span>
+        
+        <span class="n">eij</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mm</span><span class="p">(</span><span class="n">eij</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span>
+        <span class="n">eij</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">eij</span><span class="p">,</span><span class="n">p</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">eij</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -764,6 +770,7 @@ starwars (176, 256, 300)
 
         <span class="n">a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">/</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-10</span><span class="p">)</span>
         <span class="n">weighted_input</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">weighted_input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">weighted_input</span><span class="p">,</span><span class="n">p</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">weighted_input</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 </pre></div>
@@ -771,8 +778,8 @@ starwars (176, 256, 300)
 </div>
 </div>
 </div>
-<div class="section" id="gru-classifier-model-as-described-in-the-paper">
-<h3><code class="docutils literal notranslate"><span class="pre">GRU</span> <span class="pre">Classifier</span></code> Model as described in the <a class="reference external" href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008943">paper</a><a class="headerlink" href="#gru-classifier-model-as-described-in-the-paper" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="gru-classifier-model-as-described-in-the-paper-with-added-normalization-layers">
+<h3><code class="docutils literal notranslate"><span class="pre">GRU</span> <span class="pre">Classifier</span></code> Model as described in the <a class="reference external" href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008943">paper</a> with added normalization layers<a class="headerlink" href="#gru-classifier-model-as-described-in-the-paper-with-added-normalization-layers" title="Permalink to this headline">¶</a></h3>
 <img alt="_images/gru.png" src="_images/gru.png" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -794,13 +801,15 @@ starwars (176, 256, 300)
         <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span>   <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">func</span>      <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Softmax</span><span class="p">(</span><span class="n">dim</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">hidden</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">hidden</span><span class="p">,</span><span class="n">encoder_x</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="n">x</span><span class="p">,</span><span class="n">hidden</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gru</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">hidden</span><span class="p">)</span>
-        
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">att</span><span class="p">:</span>
             <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attention</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
+        
+        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -818,32 +827,27 @@ starwars (176, 256, 300)
 </div>
 </div>
 </div>
-<div class="section" id="training">
-<h2>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="training-with-normalization">
+<h2>Training (with normalization)<a class="headerlink" href="#training-with-normalization" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">net</span><span class="p">,</span><span class="n">valid_loader</span><span class="p">,</span><span class="n">optimzer</span><span class="p">,</span><span class="n">criterion</span><span class="p">,</span><span class="n">att</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="n">val_acc</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">tr_acc</span> <span class="o">=</span> <span class="p">[]</span>
     
+    <span class="n">clip</span> <span class="o">=</span> <span class="mi">3</span> <span class="c1"># gradient clipping</span>
     
-    <span class="n">print_every</span> <span class="o">=</span> <span class="mi">50</span>
-    <span class="n">clip</span> <span class="o">=</span> <span class="mi">5</span> <span class="c1"># gradient clipping</span>
-
     <span class="n">net</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
 
     <span class="n">valid_loss_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">Inf</span> 
-    
-    <span class="n">net</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
     <span class="n">valid_losses</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">train_losses</span> <span class="o">=</span> <span class="p">[]</span>
+    
     <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
         <span class="n">num_correct</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">h</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">init_hidden</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
         <span class="n">train_loss</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">valid_loss</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">train_acc</span>  <span class="o">=</span> <span class="mf">0.0</span>
-        <span class="n">valid_acc</span>  <span class="o">=</span> <span class="mf">0.0</span> 
+        
         <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">train_loader</span><span class="p">:</span>
             <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -860,18 +864,14 @@ starwars (176, 256, 300)
             <span class="n">correct</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">correct_tensor</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
             <span class="n">num_correct</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">correct</span><span class="p">)</span>
 
-
             <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
             <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
             <span class="n">nn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">clip_grad_norm_</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">clip</span><span class="p">)</span>
             <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
-
             <span class="n">train_loss</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
-        <span class="n">tr_acc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">num_correct</span><span class="o">/</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_loader</span><span class="o">.</span><span class="n">dataset</span><span class="p">)))</span>
 
 
 
-        <span class="n">acc</span> <span class="o">=</span> <span class="mf">0.0</span>
         <span class="n">val_h</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">init_hidden</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
         <span class="n">val_losses</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">net</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
@@ -884,14 +884,11 @@ starwars (176, 256, 300)
             <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">labels</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">LongTensor</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
 
             <span class="n">output</span><span class="p">,</span> <span class="n">val_h</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">val_h</span><span class="p">)</span>
-            
             <span class="n">pred</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">squeeze</span><span class="p">())</span> 
             <span class="n">top_value</span><span class="p">,</span> <span class="n">top_index</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
             <span class="n">correct_tensor</span> <span class="o">=</span> <span class="n">top_index</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">view_as</span><span class="p">(</span><span class="n">top_index</span><span class="p">))</span>
             <span class="n">correct</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">correct_tensor</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
             <span class="n">num_correct</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">correct</span><span class="p">)</span>
-            <span class="n">acc</span> <span class="o">=</span> <span class="n">num_correct</span><span class="o">/</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_loader</span><span class="o">.</span><span class="n">dataset</span><span class="p">))</span>
-            <span class="n">valid_acc</span> <span class="o">+=</span> <span class="n">acc</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
 
             <span class="n">val_loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span><span class="n">labels</span><span class="p">)</span>
             <span class="n">val_losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val_loss</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
@@ -906,15 +903,16 @@ starwars (176, 256, 300)
         <span class="n">net</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
         <span class="n">valid_losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">val_losses</span><span class="p">))</span>
         <span class="n">train_losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">train_loss</span><span class="p">))</span>
-        <span class="n">val_acc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">valid_acc</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">valid_loader</span><span class="p">))</span>
+        
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Epoch: </span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1"> </span><span class="se">\t</span><span class="s1">Training Loss: </span><span class="si">{:.6f}</span><span class="s1"> </span><span class="se">\t</span><span class="s1">Validation Loss: </span><span class="si">{:.6f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">epochs</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">train_loss</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">val_losses</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">train_losses</span><span class="p">,</span><span class="n">valid_losses</span> 
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">epochs</span>     <span class="o">=</span> <span class="mi">45</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">epochs</span>     <span class="o">=</span> <span class="mi">55</span>
 <span class="n">input_dim</span>  <span class="o">=</span> <span class="mi">300</span>
 <span class="n">hidden_dim</span> <span class="o">=</span> <span class="mi">32</span>
 <span class="n">output_dim</span> <span class="o">=</span> <span class="mi">15</span>
@@ -949,82 +947,107 @@ starwars (176, 256, 300)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">model</span><span class="p">,</span><span class="n">valid_loader</span><span class="p">,</span><span class="n">optimizer</span><span class="p">,</span><span class="n">criterion</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_losses</span><span class="p">,</span><span class="n">valid_losses</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">model</span><span class="p">,</span><span class="n">valid_loader</span><span class="p">,</span><span class="n">optimizer</span><span class="p">,</span><span class="n">criterion</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Validation loss decreased (inf --&gt; 2.515430).  Saving model ...
-Validation loss decreased (2.515430 --&gt; 2.480510).  Saving model ...
-Validation loss decreased (2.480510 --&gt; 2.400114).  Saving model ...
-Epoch: 1/45 	Training Loss: 2.580829 	Validation Loss: 2.509023
-Validation loss decreased (2.400114 --&gt; 2.389253).  Saving model ...
-Validation loss decreased (2.389253 --&gt; 2.368213).  Saving model ...
-Validation loss decreased (2.368213 --&gt; 2.342979).  Saving model ...
-Validation loss decreased (2.342979 --&gt; 2.304040).  Saving model ...
-Epoch: 2/45 	Training Loss: 2.457915 	Validation Loss: 2.418982
-Validation loss decreased (2.304040 --&gt; 2.216955).  Saving model ...
-Epoch: 3/45 	Training Loss: 2.362300 	Validation Loss: 2.359848
-Validation loss decreased (2.216955 --&gt; 2.195448).  Saving model ...
-Epoch: 4/45 	Training Loss: 2.305146 	Validation Loss: 2.300002
-Validation loss decreased (2.195448 --&gt; 2.158740).  Saving model ...
-Validation loss decreased (2.158740 --&gt; 2.153316).  Saving model ...
-Validation loss decreased (2.153316 --&gt; 2.090712).  Saving model ...
-Epoch: 5/45 	Training Loss: 2.230006 	Validation Loss: 2.229824
-Validation loss decreased (2.090712 --&gt; 2.077376).  Saving model ...
-Validation loss decreased (2.077376 --&gt; 2.071847).  Saving model ...
-Epoch: 6/45 	Training Loss: 2.181299 	Validation Loss: 2.189614
-Validation loss decreased (2.071847 --&gt; 2.027649).  Saving model ...
-Validation loss decreased (2.027649 --&gt; 1.979463).  Saving model ...
-Epoch: 7/45 	Training Loss: 2.159875 	Validation Loss: 2.169194
-Epoch: 8/45 	Training Loss: 2.097832 	Validation Loss: 2.118807
-Validation loss decreased (1.979463 --&gt; 1.959043).  Saving model ...
-Epoch: 9/45 	Training Loss: 2.075069 	Validation Loss: 2.136208
-Validation loss decreased (1.959043 --&gt; 1.937086).  Saving model ...
-Epoch: 10/45 	Training Loss: 2.064042 	Validation Loss: 2.094529
-Validation loss decreased (1.937086 --&gt; 1.936613).  Saving model ...
-Epoch: 11/45 	Training Loss: 2.034306 	Validation Loss: 2.086356
-Epoch: 12/45 	Training Loss: 2.034409 	Validation Loss: 2.078566
-Validation loss decreased (1.936613 --&gt; 1.909715).  Saving model ...
-Epoch: 13/45 	Training Loss: 2.010969 	Validation Loss: 2.025692
-Epoch: 14/45 	Training Loss: 1.980464 	Validation Loss: 2.020627
-Epoch: 15/45 	Training Loss: 1.971037 	Validation Loss: 2.022802
-Validation loss decreased (1.909715 --&gt; 1.897988).  Saving model ...
-Validation loss decreased (1.897988 --&gt; 1.890059).  Saving model ...
-Epoch: 16/45 	Training Loss: 1.970381 	Validation Loss: 2.013933
-Epoch: 17/45 	Training Loss: 1.961433 	Validation Loss: 2.013846
-Epoch: 18/45 	Training Loss: 1.972377 	Validation Loss: 2.029758
-Epoch: 19/45 	Training Loss: 1.955105 	Validation Loss: 1.996936
-Epoch: 20/45 	Training Loss: 1.954300 	Validation Loss: 2.039472
-Validation loss decreased (1.890059 --&gt; 1.877166).  Saving model ...
-Epoch: 21/45 	Training Loss: 1.967908 	Validation Loss: 1.989703
-Validation loss decreased (1.877166 --&gt; 1.859898).  Saving model ...
-Epoch: 22/45 	Training Loss: 1.940858 	Validation Loss: 1.974025
-Epoch: 23/45 	Training Loss: 1.931039 	Validation Loss: 1.979199
-Epoch: 24/45 	Training Loss: 1.932822 	Validation Loss: 1.974701
-Epoch: 25/45 	Training Loss: 1.922716 	Validation Loss: 1.978477
-Epoch: 26/45 	Training Loss: 1.927452 	Validation Loss: 1.977563
-Epoch: 27/45 	Training Loss: 1.919059 	Validation Loss: 1.980798
-Epoch: 28/45 	Training Loss: 1.918520 	Validation Loss: 1.990852
-Epoch: 29/45 	Training Loss: 1.915777 	Validation Loss: 1.979325
-Epoch: 30/45 	Training Loss: 1.934812 	Validation Loss: 1.984905
-Epoch: 31/45 	Training Loss: 1.924342 	Validation Loss: 1.980481
-Epoch: 32/45 	Training Loss: 1.921187 	Validation Loss: 1.982132
-Epoch: 33/45 	Training Loss: 1.934868 	Validation Loss: 1.980335
-Validation loss decreased (1.859898 --&gt; 1.854241).  Saving model ...
-Epoch: 34/45 	Training Loss: 1.924242 	Validation Loss: 1.989049
-Validation loss decreased (1.854241 --&gt; 1.838431).  Saving model ...
-Epoch: 35/45 	Training Loss: 1.917437 	Validation Loss: 1.962663
-Epoch: 36/45 	Training Loss: 1.917858 	Validation Loss: 1.962391
-Epoch: 37/45 	Training Loss: 1.919275 	Validation Loss: 1.972969
-Epoch: 38/45 	Training Loss: 1.927458 	Validation Loss: 1.993628
-Epoch: 39/45 	Training Loss: 1.938825 	Validation Loss: 1.988368
-Epoch: 40/45 	Training Loss: 1.934901 	Validation Loss: 1.980752
-Epoch: 41/45 	Training Loss: 1.921564 	Validation Loss: 1.969279
-Epoch: 42/45 	Training Loss: 1.911132 	Validation Loss: 1.956476
-Epoch: 43/45 	Training Loss: 1.911255 	Validation Loss: 1.955184
-Epoch: 44/45 	Training Loss: 1.917457 	Validation Loss: 1.956635
-Epoch: 45/45 	Training Loss: 1.943287 	Validation Loss: 1.979269
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Validation loss decreased (inf --&gt; 2.557632).  Saving model ...
+Validation loss decreased (2.557632 --&gt; 2.501336).  Saving model ...
+Validation loss decreased (2.501336 --&gt; 2.464465).  Saving model ...
+Validation loss decreased (2.464465 --&gt; 2.400706).  Saving model ...
+Epoch: 1/55 	Training Loss: 2.611285 	Validation Loss: 2.519824
+Validation loss decreased (2.400706 --&gt; 2.349122).  Saving model ...
+Validation loss decreased (2.349122 --&gt; 2.345047).  Saving model ...
+Epoch: 2/55 	Training Loss: 2.460848 	Validation Loss: 2.396085
+Validation loss decreased (2.345047 --&gt; 2.209366).  Saving model ...
+Validation loss decreased (2.209366 --&gt; 2.198460).  Saving model ...
+Epoch: 3/55 	Training Loss: 2.351349 	Validation Loss: 2.301972
+Validation loss decreased (2.198460 --&gt; 2.188189).  Saving model ...
+Validation loss decreased (2.188189 --&gt; 2.167447).  Saving model ...
+Validation loss decreased (2.167447 --&gt; 2.156803).  Saving model ...
+Epoch: 4/55 	Training Loss: 2.276073 	Validation Loss: 2.230465
+Validation loss decreased (2.156803 --&gt; 2.133531).  Saving model ...
+Validation loss decreased (2.133531 --&gt; 2.112830).  Saving model ...
+Validation loss decreased (2.112830 --&gt; 2.079767).  Saving model ...
+Validation loss decreased (2.079767 --&gt; 2.046438).  Saving model ...
+Epoch: 5/55 	Training Loss: 2.174148 	Validation Loss: 2.115372
+Validation loss decreased (2.046438 --&gt; 2.042985).  Saving model ...
+Validation loss decreased (2.042985 --&gt; 2.016729).  Saving model ...
+Validation loss decreased (2.016729 --&gt; 2.000793).  Saving model ...
+Validation loss decreased (2.000793 --&gt; 1.993459).  Saving model ...
+Epoch: 6/55 	Training Loss: 2.100753 	Validation Loss: 2.065572
+Validation loss decreased (1.993459 --&gt; 1.986823).  Saving model ...
+Validation loss decreased (1.986823 --&gt; 1.965315).  Saving model ...
+Validation loss decreased (1.965315 --&gt; 1.963359).  Saving model ...
+Epoch: 7/55 	Training Loss: 2.059760 	Validation Loss: 2.041926
+Validation loss decreased (1.963359 --&gt; 1.943046).  Saving model ...
+Epoch: 8/55 	Training Loss: 2.038361 	Validation Loss: 2.029270
+Validation loss decreased (1.943046 --&gt; 1.908829).  Saving model ...
+Epoch: 9/55 	Training Loss: 2.024466 	Validation Loss: 2.019448
+Epoch: 10/55 	Training Loss: 2.015960 	Validation Loss: 2.008377
+Validation loss decreased (1.908829 --&gt; 1.892188).  Saving model ...
+Epoch: 11/55 	Training Loss: 2.008539 	Validation Loss: 2.001390
+Epoch: 12/55 	Training Loss: 1.995651 	Validation Loss: 1.975545
+Epoch: 13/55 	Training Loss: 1.969129 	Validation Loss: 1.959873
+Validation loss decreased (1.892188 --&gt; 1.880734).  Saving model ...
+Validation loss decreased (1.880734 --&gt; 1.847991).  Saving model ...
+Epoch: 14/55 	Training Loss: 1.951198 	Validation Loss: 1.942628
+Epoch: 15/55 	Training Loss: 1.922700 	Validation Loss: 1.928296
+Validation loss decreased (1.847991 --&gt; 1.846954).  Saving model ...
+Epoch: 16/55 	Training Loss: 1.902646 	Validation Loss: 1.911614
+Validation loss decreased (1.846954 --&gt; 1.846504).  Saving model ...
+Validation loss decreased (1.846504 --&gt; 1.844586).  Saving model ...
+Epoch: 17/55 	Training Loss: 1.889792 	Validation Loss: 1.902765
+Validation loss decreased (1.844586 --&gt; 1.835119).  Saving model ...
+Epoch: 18/55 	Training Loss: 1.875224 	Validation Loss: 1.898507
+Validation loss decreased (1.835119 --&gt; 1.829168).  Saving model ...
+Epoch: 19/55 	Training Loss: 1.873816 	Validation Loss: 1.891639
+Validation loss decreased (1.829168 --&gt; 1.822830).  Saving model ...
+Epoch: 20/55 	Training Loss: 1.865225 	Validation Loss: 1.886594
+Epoch: 21/55 	Training Loss: 1.862431 	Validation Loss: 1.886481
+Validation loss decreased (1.822830 --&gt; 1.822247).  Saving model ...
+Epoch: 22/55 	Training Loss: 1.861936 	Validation Loss: 1.887829
+Validation loss decreased (1.822247 --&gt; 1.820433).  Saving model ...
+Epoch: 23/55 	Training Loss: 1.860913 	Validation Loss: 1.883295
+Epoch: 24/55 	Training Loss: 1.858867 	Validation Loss: 1.881072
+Epoch: 25/55 	Training Loss: 1.858096 	Validation Loss: 1.884121
+Epoch: 26/55 	Training Loss: 1.856932 	Validation Loss: 1.880588
+Validation loss decreased (1.820433 --&gt; 1.820152).  Saving model ...
+Epoch: 27/55 	Training Loss: 1.856941 	Validation Loss: 1.879658
+Validation loss decreased (1.820152 --&gt; 1.819162).  Saving model ...
+Epoch: 28/55 	Training Loss: 1.856160 	Validation Loss: 1.879847
+Epoch: 29/55 	Training Loss: 1.855762 	Validation Loss: 1.880640
+Epoch: 30/55 	Training Loss: 1.855584 	Validation Loss: 1.877967
+Epoch: 31/55 	Training Loss: 1.855051 	Validation Loss: 1.875694
+Epoch: 32/55 	Training Loss: 1.853826 	Validation Loss: 1.870545
+Epoch: 33/55 	Training Loss: 1.837792 	Validation Loss: 1.859686
+Epoch: 34/55 	Training Loss: 1.851510 	Validation Loss: 1.912395
+Epoch: 35/55 	Training Loss: 1.917076 	Validation Loss: 1.905472
+Epoch: 36/55 	Training Loss: 1.889705 	Validation Loss: 1.881528
+Epoch: 37/55 	Training Loss: 1.858570 	Validation Loss: 1.875784
+Epoch: 38/55 	Training Loss: 1.843990 	Validation Loss: 1.858869
+Epoch: 39/55 	Training Loss: 1.835038 	Validation Loss: 1.855808
+Epoch: 40/55 	Training Loss: 1.829710 	Validation Loss: 1.848768
+Epoch: 41/55 	Training Loss: 1.828127 	Validation Loss: 1.847426
+Epoch: 42/55 	Training Loss: 1.826658 	Validation Loss: 1.850303
+Epoch: 43/55 	Training Loss: 1.825976 	Validation Loss: 1.844425
+Validation loss decreased (1.819162 --&gt; 1.817579).  Saving model ...
+Epoch: 44/55 	Training Loss: 1.824646 	Validation Loss: 1.842137
+Epoch: 45/55 	Training Loss: 1.822379 	Validation Loss: 1.840508
+Epoch: 46/55 	Training Loss: 1.820776 	Validation Loss: 1.838437
+Validation loss decreased (1.817579 --&gt; 1.817509).  Saving model ...
+Epoch: 47/55 	Training Loss: 1.820664 	Validation Loss: 1.839246
+Epoch: 48/55 	Training Loss: 1.819858 	Validation Loss: 1.836959
+Epoch: 49/55 	Training Loss: 1.819425 	Validation Loss: 1.838656
+Validation loss decreased (1.817509 --&gt; 1.817457).  Saving model ...
+Epoch: 50/55 	Training Loss: 1.819623 	Validation Loss: 1.838742
+Epoch: 51/55 	Training Loss: 1.819236 	Validation Loss: 1.838902
+Epoch: 52/55 	Training Loss: 1.819629 	Validation Loss: 1.838187
+Validation loss decreased (1.817457 --&gt; 1.817129).  Saving model ...
+Epoch: 53/55 	Training Loss: 1.820474 	Validation Loss: 1.841251
+Epoch: 54/55 	Training Loss: 1.821646 	Validation Loss: 1.844284
+Epoch: 55/55 	Training Loss: 1.821784 	Validation Loss: 1.841849
 </pre></div>
 </div>
 </div>
@@ -1054,78 +1077,108 @@ Epoch: 45/45 	Training Loss: 1.943287 	Validation Loss: 1.979269
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">model</span><span class="p">,</span><span class="n">valid_loader</span><span class="p">,</span><span class="n">optimizer</span><span class="p">,</span><span class="n">criterion</span><span class="p">,</span><span class="n">att</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_losses</span><span class="p">,</span><span class="n">valid_losses</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">model</span><span class="p">,</span><span class="n">valid_loader</span><span class="p">,</span><span class="n">optimizer</span><span class="p">,</span><span class="n">criterion</span><span class="p">,</span><span class="n">att</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Validation loss decreased (inf --&gt; 2.413459).  Saving model ...
-Validation loss decreased (2.413459 --&gt; 2.288238).  Saving model ...
-Validation loss decreased (2.288238 --&gt; 2.267991).  Saving model ...
-Epoch: 1/45 	Training Loss: 2.555125 	Validation Loss: 2.403512
-Validation loss decreased (2.267991 --&gt; 2.135175).  Saving model ...
-Epoch: 2/45 	Training Loss: 2.284556 	Validation Loss: 2.251288
-Validation loss decreased (2.135175 --&gt; 2.010185).  Saving model ...
-Epoch: 3/45 	Training Loss: 2.168519 	Validation Loss: 2.175147
-Validation loss decreased (2.010185 --&gt; 2.000897).  Saving model ...
-Epoch: 4/45 	Training Loss: 2.112263 	Validation Loss: 2.165599
-Epoch: 5/45 	Training Loss: 2.076881 	Validation Loss: 2.138372
-Epoch: 6/45 	Training Loss: 2.054630 	Validation Loss: 2.120766
-Epoch: 7/45 	Training Loss: 2.035374 	Validation Loss: 2.117952
-Validation loss decreased (2.000897 --&gt; 1.956686).  Saving model ...
-Epoch: 8/45 	Training Loss: 2.043953 	Validation Loss: 2.115788
-Epoch: 9/45 	Training Loss: 2.026250 	Validation Loss: 2.097490
-Epoch: 10/45 	Training Loss: 2.004428 	Validation Loss: 2.101424
-Epoch: 11/45 	Training Loss: 2.002990 	Validation Loss: 2.107551
-Epoch: 12/45 	Training Loss: 2.009701 	Validation Loss: 2.107053
-Epoch: 13/45 	Training Loss: 2.006640 	Validation Loss: 2.102857
-Epoch: 14/45 	Training Loss: 2.010975 	Validation Loss: 2.116301
-Validation loss decreased (1.956686 --&gt; 1.917972).  Saving model ...
-Epoch: 15/45 	Training Loss: 2.021651 	Validation Loss: 2.123695
-Epoch: 16/45 	Training Loss: 2.005918 	Validation Loss: 2.107858
-Epoch: 17/45 	Training Loss: 1.987436 	Validation Loss: 2.100349
-Epoch: 18/45 	Training Loss: 1.978645 	Validation Loss: 2.096797
-Epoch: 19/45 	Training Loss: 1.973355 	Validation Loss: 2.108664
-Epoch: 20/45 	Training Loss: 1.976344 	Validation Loss: 2.077388
-Epoch: 21/45 	Training Loss: 1.975359 	Validation Loss: 2.081072
-Validation loss decreased (1.917972 --&gt; 1.901195).  Saving model ...
-Epoch: 22/45 	Training Loss: 1.963503 	Validation Loss: 2.071328
-Epoch: 23/45 	Training Loss: 1.975962 	Validation Loss: 2.083158
-Epoch: 24/45 	Training Loss: 1.959941 	Validation Loss: 2.053431
-Epoch: 25/45 	Training Loss: 1.978361 	Validation Loss: 2.091306
-Epoch: 26/45 	Training Loss: 1.993598 	Validation Loss: 2.097494
-Epoch: 27/45 	Training Loss: 1.968262 	Validation Loss: 2.085063
-Epoch: 28/45 	Training Loss: 1.978736 	Validation Loss: 2.058533
-Epoch: 29/45 	Training Loss: 1.967040 	Validation Loss: 2.109438
-Epoch: 30/45 	Training Loss: 1.997978 	Validation Loss: 2.080189
-Epoch: 31/45 	Training Loss: 1.969836 	Validation Loss: 2.064535
-Epoch: 32/45 	Training Loss: 1.962388 	Validation Loss: 2.058457
-Epoch: 33/45 	Training Loss: 1.968990 	Validation Loss: 2.073843
-Epoch: 34/45 	Training Loss: 1.978344 	Validation Loss: 2.082917
-Epoch: 35/45 	Training Loss: 1.979810 	Validation Loss: 2.067924
-Epoch: 36/45 	Training Loss: 1.971462 	Validation Loss: 2.076883
-Epoch: 37/45 	Training Loss: 1.980857 	Validation Loss: 2.087954
-Epoch: 38/45 	Training Loss: 1.976077 	Validation Loss: 2.090263
-Epoch: 39/45 	Training Loss: 1.973334 	Validation Loss: 2.078146
-Epoch: 40/45 	Training Loss: 1.967681 	Validation Loss: 2.106318
-Epoch: 41/45 	Training Loss: 1.956381 	Validation Loss: 2.075821
-Epoch: 42/45 	Training Loss: 1.959319 	Validation Loss: 2.065286
-Epoch: 43/45 	Training Loss: 1.968653 	Validation Loss: 2.077078
-Epoch: 44/45 	Training Loss: 1.957790 	Validation Loss: 2.066110
-Epoch: 45/45 	Training Loss: 1.964568 	Validation Loss: 2.083749
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Validation loss decreased (inf --&gt; 2.624413).  Saving model ...
+Validation loss decreased (2.624413 --&gt; 2.608510).  Saving model ...
+Validation loss decreased (2.608510 --&gt; 2.491987).  Saving model ...
+Epoch: 1/55 	Training Loss: 2.641752 	Validation Loss: 2.568219
+Validation loss decreased (2.491987 --&gt; 2.458630).  Saving model ...
+Validation loss decreased (2.458630 --&gt; 2.414591).  Saving model ...
+Validation loss decreased (2.414591 --&gt; 2.306006).  Saving model ...
+Epoch: 2/55 	Training Loss: 2.503880 	Validation Loss: 2.443332
+Validation loss decreased (2.306006 --&gt; 2.283928).  Saving model ...
+Validation loss decreased (2.283928 --&gt; 2.273599).  Saving model ...
+Validation loss decreased (2.273599 --&gt; 2.200151).  Saving model ...
+Epoch: 3/55 	Training Loss: 2.387059 	Validation Loss: 2.371756
+Epoch: 4/55 	Training Loss: 2.326022 	Validation Loss: 2.341955
+Validation loss decreased (2.200151 --&gt; 2.188531).  Saving model ...
+Validation loss decreased (2.188531 --&gt; 2.177057).  Saving model ...
+Epoch: 5/55 	Training Loss: 2.286469 	Validation Loss: 2.289101
+Validation loss decreased (2.177057 --&gt; 2.166954).  Saving model ...
+Validation loss decreased (2.166954 --&gt; 2.152951).  Saving model ...
+Epoch: 6/55 	Training Loss: 2.227106 	Validation Loss: 2.230731
+Validation loss decreased (2.152951 --&gt; 2.098884).  Saving model ...
+Validation loss decreased (2.098884 --&gt; 2.097484).  Saving model ...
+Validation loss decreased (2.097484 --&gt; 2.070110).  Saving model ...
+Epoch: 7/55 	Training Loss: 2.176078 	Validation Loss: 2.194751
+Epoch: 8/55 	Training Loss: 2.139510 	Validation Loss: 2.154583
+Validation loss decreased (2.070110 --&gt; 2.037787).  Saving model ...
+Epoch: 9/55 	Training Loss: 2.115802 	Validation Loss: 2.151004
+Epoch: 10/55 	Training Loss: 2.094192 	Validation Loss: 2.146936
+Validation loss decreased (2.037787 --&gt; 2.025309).  Saving model ...
+Validation loss decreased (2.025309 --&gt; 2.015933).  Saving model ...
+Validation loss decreased (2.015933 --&gt; 1.999208).  Saving model ...
+Epoch: 11/55 	Training Loss: 2.073209 	Validation Loss: 2.118687
+Epoch: 12/55 	Training Loss: 2.068583 	Validation Loss: 2.133625
+Validation loss decreased (1.999208 --&gt; 1.979575).  Saving model ...
+Epoch: 13/55 	Training Loss: 2.065075 	Validation Loss: 2.121550
+Epoch: 14/55 	Training Loss: 2.069112 	Validation Loss: 2.125355
+Validation loss decreased (1.979575 --&gt; 1.945145).  Saving model ...
+Epoch: 15/55 	Training Loss: 2.067485 	Validation Loss: 2.126611
+Epoch: 16/55 	Training Loss: 2.046535 	Validation Loss: 2.097579
+Epoch: 17/55 	Training Loss: 2.034111 	Validation Loss: 2.086860
+Validation loss decreased (1.945145 --&gt; 1.921752).  Saving model ...
+Epoch: 18/55 	Training Loss: 2.023067 	Validation Loss: 2.083885
+Epoch: 19/55 	Training Loss: 2.012405 	Validation Loss: 2.079399
+Epoch: 20/55 	Training Loss: 2.000204 	Validation Loss: 2.065800
+Epoch: 21/55 	Training Loss: 1.983991 	Validation Loss: 2.045197
+Epoch: 22/55 	Training Loss: 1.957093 	Validation Loss: 2.042332
+Epoch: 23/55 	Training Loss: 1.968855 	Validation Loss: 2.055035
+Epoch: 24/55 	Training Loss: 1.972833 	Validation Loss: 2.059683
+Epoch: 25/55 	Training Loss: 1.991431 	Validation Loss: 2.070982
+Epoch: 26/55 	Training Loss: 1.999834 	Validation Loss: 2.049399
+Epoch: 27/55 	Training Loss: 1.970423 	Validation Loss: 2.041591
+Epoch: 28/55 	Training Loss: 1.956919 	Validation Loss: 2.048674
+Validation loss decreased (1.921752 --&gt; 1.907688).  Saving model ...
+Epoch: 29/55 	Training Loss: 1.950946 	Validation Loss: 2.043836
+Epoch: 30/55 	Training Loss: 1.949682 	Validation Loss: 2.042138
+Epoch: 31/55 	Training Loss: 1.928608 	Validation Loss: 2.031726
+Validation loss decreased (1.907688 --&gt; 1.903350).  Saving model ...
+Epoch: 32/55 	Training Loss: 1.928200 	Validation Loss: 2.029440
+Epoch: 33/55 	Training Loss: 1.932252 	Validation Loss: 2.036808
+Validation loss decreased (1.903350 --&gt; 1.900566).  Saving model ...
+Epoch: 34/55 	Training Loss: 1.934156 	Validation Loss: 2.034401
+Validation loss decreased (1.900566 --&gt; 1.874439).  Saving model ...
+Epoch: 35/55 	Training Loss: 1.933573 	Validation Loss: 2.033260
+Epoch: 36/55 	Training Loss: 1.945077 	Validation Loss: 2.039632
+Epoch: 37/55 	Training Loss: 1.946042 	Validation Loss: 2.041117
+Epoch: 38/55 	Training Loss: 1.952741 	Validation Loss: 2.048495
+Epoch: 39/55 	Training Loss: 1.953005 	Validation Loss: 2.037797
+Epoch: 40/55 	Training Loss: 1.942412 	Validation Loss: 2.024738
+Epoch: 41/55 	Training Loss: 1.925420 	Validation Loss: 2.036196
+Epoch: 42/55 	Training Loss: 1.940638 	Validation Loss: 2.052473
+Epoch: 43/55 	Training Loss: 1.944556 	Validation Loss: 2.072813
+Epoch: 44/55 	Training Loss: 1.946825 	Validation Loss: 2.050343
+Epoch: 45/55 	Training Loss: 1.958241 	Validation Loss: 2.051513
+Epoch: 46/55 	Training Loss: 1.959062 	Validation Loss: 2.048151
+Epoch: 47/55 	Training Loss: 1.949183 	Validation Loss: 2.062177
+Epoch: 48/55 	Training Loss: 1.944623 	Validation Loss: 2.036539
+Epoch: 49/55 	Training Loss: 1.941807 	Validation Loss: 2.025142
+Validation loss decreased (1.874439 --&gt; 1.849910).  Saving model ...
+Epoch: 50/55 	Training Loss: 1.929951 	Validation Loss: 2.013592
+Epoch: 51/55 	Training Loss: 1.937417 	Validation Loss: 2.047096
+Epoch: 52/55 	Training Loss: 1.951193 	Validation Loss: 2.040460
+Epoch: 53/55 	Training Loss: 1.944661 	Validation Loss: 2.050006
+Epoch: 54/55 	Training Loss: 1.947667 	Validation Loss: 2.045703
+Epoch: 55/55 	Training Loss: 1.950289 	Validation Loss: 2.053404
 </pre></div>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="section" id="testing">
-<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="testing-with-normalization">
+<h2>Testing (with normalization)<a class="headerlink" href="#testing-with-normalization" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">test_loader</span><span class="p">,</span><span class="n">net</span><span class="p">):</span>
     <span class="n">v_c</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">net</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
     <span class="n">num_correct</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">valid_acc</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">h</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">init_hidden</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
@@ -1171,7 +1224,7 @@ Epoch: 45/45 	Training Loss: 1.964568 	Validation Loss: 2.083749
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test accuracy: 0.823
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test accuracy: 0.963
 </pre></div>
 </div>
 </div>
@@ -1198,7 +1251,7 @@ Epoch: 45/45 	Training Loss: 1.964568 	Validation Loss: 2.083749
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test accuracy: 0.786
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test accuracy: 0.801
 </pre></div>
 </div>
 </div>
