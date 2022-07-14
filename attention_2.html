@@ -1,0 +1,1712 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notebook: Predicting Behaviour &#8212; Lab Works</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="GRU + Attention (with normalization)" href="attention.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Lab Works</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Content
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="attention.html">
+   GRU + Attention (with normalization)
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Notebook: Predicting Behaviour
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/attention_2.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AkshatYadav0/P_Lab"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/AkshatYadav0/P_Lab/issues/new?title=Issue%20on%20page%20%2Fattention_2.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AkshatYadav0/P_Lab/master?urlpath=tree/attention_2.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   Overview
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data">
+   Data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#behavioural-scores-normalization">
+     Behavioural Scores Normalization
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dataset-organization">
+   Dataset organization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#training-validation-test">
+   Training, Validation, Test
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#models">
+   Models
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#implementing-the-attention-model">
+     Implementing the
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       Attention
+      </span>
+     </code>
+     Model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gru-classifier-model-as-described-in-the-paper">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       GRU
+      </span>
+      <span class="pre">
+       Classifier
+      </span>
+     </code>
+     Model as described in the paper
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#training">
+   Training
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#training-with-attention-layer">
+     Training with Attention Layer
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#training-without-attention-layer">
+     Training without Attention Layer
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#testing">
+   Testing
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#prediction-with-attention-layer">
+     Prediction with Attention Layer
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#prediction-without-attention-layer">
+     Prediction without Attention Layer
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#results">
+   Results
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#spearman-correlation-rank">
+     Spearman Correlation Rank
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#starwars-verbal-iq">
+       Starwars || Verbal IQ
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#starwars-fluid-intelligence">
+       Starwars || Fluid Intelligence
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#losses">
+     Losses
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       Starwars || Verbal IQ
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id2">
+       Starwars || Fluid Intelligence
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Notebook: Predicting Behaviour</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   Overview
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data">
+   Data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#behavioural-scores-normalization">
+     Behavioural Scores Normalization
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dataset-organization">
+   Dataset organization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#training-validation-test">
+   Training, Validation, Test
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#models">
+   Models
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#implementing-the-attention-model">
+     Implementing the
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       Attention
+      </span>
+     </code>
+     Model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gru-classifier-model-as-described-in-the-paper">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       GRU
+      </span>
+      <span class="pre">
+       Classifier
+      </span>
+     </code>
+     Model as described in the paper
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#training">
+   Training
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#training-with-attention-layer">
+     Training with Attention Layer
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#training-without-attention-layer">
+     Training without Attention Layer
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#testing">
+   Testing
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#prediction-with-attention-layer">
+     Prediction with Attention Layer
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#prediction-without-attention-layer">
+     Prediction without Attention Layer
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#results">
+   Results
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#spearman-correlation-rank">
+     Spearman Correlation Rank
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#starwars-verbal-iq">
+       Starwars || Verbal IQ
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#starwars-fluid-intelligence">
+       Starwars || Fluid Intelligence
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#losses">
+     Losses
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       Starwars || Verbal IQ
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id2">
+       Starwars || Fluid Intelligence
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="notebook-predicting-behaviour">
+<h1>Notebook: Predicting Behaviour<a class="headerlink" href="#notebook-predicting-behaviour" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p><strong>This notebook extends the predicting behaviour model described in the <a class="reference external" href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008943">paper</a></strong></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="data">
+<h2>Data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h2>
+<p><strong>Data provided is already preprocessed but needs to be converted in model usabale format</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">spearmanr</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;HCP_movie_watching.pkl&#39;</span><span class="p">,</span><span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">TS</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">TS</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;testretest&#39;, &#39;twomen&#39;, &#39;bridgeville&#39;, &#39;pockets&#39;, &#39;overcome&#39;, &#39;inception&#39;, &#39;socialnet&#39;, &#39;oceans&#39;, &#39;flower&#39;, &#39;hotel&#39;, &#39;garden&#39;, &#39;dreary&#39;, &#39;homealone&#39;, &#39;brokovich&#39;, &#39;starwars&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">movie_name</span><span class="p">,</span> <span class="n">ts</span> <span class="ow">in</span> <span class="n">TS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4, 176, 84, 300)
+(176, 245, 300)
+(176, 222, 300)
+(176, 189, 300)
+(176, 65, 300)
+(176, 227, 300)
+(176, 260, 300)
+(176, 250, 300)
+(176, 181, 300)
+(176, 186, 300)
+(176, 205, 300)
+(176, 143, 300)
+(176, 233, 300)
+(176, 231, 300)
+(176, 256, 300)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="behavioural-scores-normalization">
+<h3>Behavioural Scores Normalization<a class="headerlink" href="#behavioural-scores-normalization" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;HCP_behavioral_scores.pkl&#39;</span><span class="p">,</span><span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">TS1</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">TS1</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;Subject&#39;, &#39;PMAT24_A_CR&#39;, &#39;PicVocab_Unadj&#39;, &#39;NEOFAC_A&#39;, &#39;NEOFAC_O&#39;,
+       &#39;NEOFAC_C&#39;, &#39;NEOFAC_N&#39;, &#39;NEOFAC_E&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+<span class="n">dict_</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">col</span><span class="p">,</span><span class="n">ts</span> <span class="ow">in</span> <span class="n">TS1</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,))</span>
+    <span class="n">dict_</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">dict_</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Subject</th>
+      <th>PMAT24_A_CR</th>
+      <th>PicVocab_Unadj</th>
+      <th>NEOFAC_A</th>
+      <th>NEOFAC_O</th>
+      <th>NEOFAC_C</th>
+      <th>NEOFAC_N</th>
+      <th>NEOFAC_E</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>0.851851</td>
+      <td>0.375000</td>
+      <td>0.620690</td>
+      <td>0.612903</td>
+      <td>0.135135</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.001901</td>
+      <td>0.823529</td>
+      <td>0.438968</td>
+      <td>0.291667</td>
+      <td>0.655172</td>
+      <td>0.677419</td>
+      <td>0.432432</td>
+      <td>0.387097</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.002466</td>
+      <td>0.647059</td>
+      <td>0.141904</td>
+      <td>0.583333</td>
+      <td>0.413793</td>
+      <td>0.483871</td>
+      <td>0.216216</td>
+      <td>0.516129</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.004255</td>
+      <td>1.000000</td>
+      <td>0.574822</td>
+      <td>0.708333</td>
+      <td>0.655172</td>
+      <td>0.903226</td>
+      <td>0.189189</td>
+      <td>0.322581</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.005939</td>
+      <td>0.941176</td>
+      <td>0.411379</td>
+      <td>0.375000</td>
+      <td>0.517241</td>
+      <td>0.419355</td>
+      <td>0.243243</td>
+      <td>0.548387</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>171</th>
+      <td>0.951130</td>
+      <td>0.411765</td>
+      <td>0.354675</td>
+      <td>0.708333</td>
+      <td>0.586207</td>
+      <td>0.741935</td>
+      <td>0.405405</td>
+      <td>0.774194</td>
+    </tr>
+    <tr>
+      <th>172</th>
+      <td>0.959536</td>
+      <td>0.470588</td>
+      <td>0.490631</td>
+      <td>0.500000</td>
+      <td>0.482759</td>
+      <td>0.161290</td>
+      <td>0.540541</td>
+      <td>0.193548</td>
+    </tr>
+    <tr>
+      <th>173</th>
+      <td>0.968477</td>
+      <td>0.470588</td>
+      <td>0.134435</td>
+      <td>0.458333</td>
+      <td>0.344828</td>
+      <td>0.612903</td>
+      <td>0.540541</td>
+      <td>0.548387</td>
+    </tr>
+    <tr>
+      <th>174</th>
+      <td>0.973156</td>
+      <td>0.647059</td>
+      <td>0.681923</td>
+      <td>0.416667</td>
+      <td>0.724138</td>
+      <td>0.645161</td>
+      <td>0.756757</td>
+      <td>0.612903</td>
+    </tr>
+    <tr>
+      <th>175</th>
+      <td>1.000000</td>
+      <td>0.764706</td>
+      <td>0.230945</td>
+      <td>0.208333</td>
+      <td>0.517241</td>
+      <td>0.774194</td>
+      <td>0.432432</td>
+      <td>0.677419</td>
+    </tr>
+  </tbody>
+</table>
+<p>176 rows × 8 columns</p>
+</div></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="dataset-organization">
+<h2>Dataset organization<a class="headerlink" href="#dataset-organization" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">TS</span></code> is a dictionary with movie names as keys</p>
+<p>Value against each key is a numpy array of dimensions <code class="docutils literal notranslate"><span class="pre">[#participants,</span> <span class="pre">#time</span> <span class="pre">points,</span> <span class="pre">#ROIs]</span></code></p>
+<p>Note that the testretest movie appears on all 4 runs for a participant, therefore the value has dimensions <code class="docutils literal notranslate"><span class="pre">[#runs,</span> <span class="pre">#participants,</span> <span class="pre">#time</span> <span class="pre">points,</span> <span class="pre">#ROIs]</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.utils.data.sampler</span> <span class="kn">import</span> <span class="n">SubsetRandomSampler</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">TensorDataset</span><span class="p">,</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">ConcatDataset</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="n">behav_score</span> <span class="p">,</span> <span class="n">movie</span><span class="p">,</span> <span class="n">seq_length</span><span class="p">,</span><span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">rel</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">l</span>  <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="n">behav_score</span><span class="p">]:</span>
+        <span class="n">rel</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">score</span> 
+        <span class="n">l</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+    <span class="n">train_feature</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">test_feature</span>  <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">train_target</span>  <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">test_target</span>   <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">movie_name</span><span class="p">,</span> <span class="n">ts</span> <span class="ow">in</span> <span class="n">TS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">pep</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">movie_name</span> <span class="o">==</span> <span class="n">movie</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ts</span><span class="p">:</span>
+                <span class="n">pep</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">pep</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;</span><span class="n">seq_length</span><span class="p">:</span>
+                        <span class="n">k</span> <span class="o">=</span> <span class="n">i</span><span class="p">[:</span><span class="n">seq_length</span><span class="p">][:]</span>
+                        <span class="n">train_feature</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+                        <span class="n">train_target</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">rel</span><span class="p">[</span><span class="n">pep</span><span class="p">]])</span>
+
+                        <span class="n">k</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">seq_length</span><span class="p">:][:]</span>
+                        <span class="n">train_feature</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+                        <span class="n">train_target</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">rel</span><span class="p">[</span><span class="n">pep</span><span class="p">]])</span>
+
+                    <span class="k">elif</span> <span class="n">i</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&lt;</span><span class="n">seq_length</span><span class="p">:</span>
+                        <span class="n">k</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">300</span><span class="p">]</span><span class="o">*</span><span class="n">seq_length</span>
+                        <span class="n">k</span><span class="p">[</span><span class="n">seq_length</span><span class="o">-</span><span class="n">i</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:]</span> <span class="o">=</span> <span class="n">i</span>
+                        <span class="n">train_feature</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+                        <span class="n">train_target</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">rel</span><span class="p">[</span><span class="n">pep</span><span class="p">]])</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">shuffle</span><span class="p">:</span>
+                            <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                            <span class="n">train_feature</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">train_feature</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                        <span class="n">train_target</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">rel</span><span class="p">[</span><span class="n">pep</span><span class="p">]]</span><span class="o">*</span><span class="n">seq_length</span><span class="p">)</span>
+
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;</span><span class="n">seq_length</span><span class="p">:</span>
+                        <span class="n">k</span> <span class="o">=</span> <span class="n">i</span><span class="p">[:</span><span class="n">seq_length</span><span class="p">][:]</span>
+                        <span class="n">test_feature</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+                        <span class="n">test_target</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">rel</span><span class="p">[</span><span class="n">pep</span><span class="p">]]</span><span class="o">*</span><span class="n">seq_length</span><span class="p">)</span>
+
+                        <span class="n">k</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">seq_length</span><span class="p">:][:]</span>
+                        <span class="n">test_feature</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+                        <span class="n">test_target</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">rel</span><span class="p">[</span><span class="n">pep</span><span class="p">]]</span><span class="o">*</span><span class="n">seq_length</span><span class="p">)</span>
+
+                    <span class="k">elif</span> <span class="n">i</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&lt;</span><span class="n">seq_length</span><span class="p">:</span>
+                        <span class="n">k</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">300</span><span class="p">]</span><span class="o">*</span><span class="n">seq_length</span>
+                        <span class="n">k</span><span class="p">[</span><span class="n">seq_length</span><span class="o">-</span><span class="n">i</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:]</span> <span class="o">=</span> <span class="n">i</span>
+                        <span class="n">test_feature</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+                        <span class="n">test_target</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">rel</span><span class="p">[</span><span class="n">pep</span><span class="p">]]</span><span class="o">*</span><span class="n">seq_length</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">test_feature</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                        <span class="n">test_target</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">rel</span><span class="p">[</span><span class="n">pep</span><span class="p">]]</span><span class="o">*</span><span class="n">seq_length</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">pep</span><span class="p">)</span>
+        <span class="sd">&#39;&#39;&#39;else:</span>
+<span class="sd">            for jj in ts:</span>
+<span class="sd">                pep = 0</span>
+<span class="sd">                for i in jj:</span>
+<span class="sd">                    pep += 1</span>
+<span class="sd">                    if (pep &lt;= 100):</span>
+<span class="sd">                        if i.shape[0]&gt;seq_length:</span>
+<span class="sd">                            k = i[:seq_length][:]</span>
+<span class="sd">                            train_feature.append(k)</span>
+<span class="sd">                            train_target.append(rel[pep])</span>
+
+<span class="sd">                            k = i[i.shape[0]-seq_length:][:]</span>
+<span class="sd">                            train_feature.append(k)</span>
+<span class="sd">                            train_target.append(rel[pep])</span>
+
+<span class="sd">                        elif i.shape[0]&lt;seq_length:</span>
+<span class="sd">                            k = [[0]*300]*seq_length</span>
+<span class="sd">                            k[seq_length-i.shape[0]:] = i</span>
+<span class="sd">                            train_feature.append(k)</span>
+<span class="sd">                            train_target.append(rel[pep])</span>
+<span class="sd">                        else:</span>
+<span class="sd">                            train_feature.append(i)</span>
+<span class="sd">                            train_target.append(rel[pep])</span>
+
+<span class="sd">                    else:</span>
+<span class="sd">                        if i.shape[0]&gt;seq_length:</span>
+<span class="sd">                            k = i[:seq_length][:]</span>
+<span class="sd">                            test_feature.append(k)</span>
+<span class="sd">                            test_target.append(rel[pep])</span>
+
+<span class="sd">                            k = i[i.shape[0]-seq_length:][:]</span>
+<span class="sd">                            test_feature.append(k)</span>
+<span class="sd">                            test_target.append(rel[pep])</span>
+
+<span class="sd">                        elif i.shape[0]&lt;seq_length:</span>
+<span class="sd">                            k = [[0]*300]*seq_length</span>
+<span class="sd">                            k[seq_length-i.shape[0]:] = i</span>
+<span class="sd">                            test_feature.append(k)</span>
+<span class="sd">                            test_target.append(rel[pep])</span>
+<span class="sd">                        else:</span>
+<span class="sd">                            test_feature.append(i)</span>
+<span class="sd">                            test_target.append(rel[pep])</span>
+<span class="sd">                print(pep)&#39;&#39;&#39;</span>
+    
+    <span class="n">train_data</span> <span class="o">=</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">train_feature</span><span class="p">))</span><span class="o">.</span><span class="n">float</span><span class="p">(),</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">train_target</span><span class="p">))</span><span class="o">.</span><span class="n">float</span><span class="p">())</span>
+    <span class="n">test_data</span>  <span class="o">=</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">test_feature</span><span class="p">))</span><span class="o">.</span><span class="n">float</span><span class="p">(),</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">test_target</span><span class="p">))</span><span class="o">.</span><span class="n">float</span><span class="p">())</span>
+    
+    
+    <span class="n">batch_size</span>  <span class="o">=</span> <span class="mi">15</span>
+    <span class="n">valid_data</span>  <span class="o">=</span> <span class="mf">0.30</span>
+    <span class="n">t_train</span>     <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_data</span><span class="p">)</span>
+    <span class="n">data_no</span>     <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">t_train</span><span class="p">))</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">data_no</span><span class="p">)</span>
+    <span class="n">split_no</span>    <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">valid_data</span><span class="o">*</span><span class="n">t_train</span><span class="p">))</span>
+    <span class="n">train</span><span class="p">,</span><span class="n">valid</span> <span class="o">=</span> <span class="n">data_no</span><span class="p">[</span><span class="n">split_no</span><span class="p">:]</span> <span class="o">+</span> <span class="n">data_no</span><span class="p">[:</span><span class="mi">5</span><span class="p">],</span><span class="n">data_no</span><span class="p">[:</span><span class="n">split_no</span><span class="p">]</span>
+
+    <span class="n">train_sampler</span> <span class="o">=</span> <span class="n">SubsetRandomSampler</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+    <span class="n">valid_sampler</span> <span class="o">=</span> <span class="n">SubsetRandomSampler</span><span class="p">(</span><span class="n">valid</span><span class="p">)</span>
+
+    <span class="n">train_loader</span>  <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span><span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span><span class="n">sampler</span><span class="o">=</span><span class="n">train_sampler</span><span class="p">)</span>
+    <span class="n">valid_loader</span>  <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span><span class="n">sampler</span><span class="o">=</span><span class="n">valid_sampler</span><span class="p">,</span><span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
+    <span class="n">test_loader</span>   <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span><span class="c1">#,shuffle = True)</span>
+    <span class="k">return</span> <span class="n">train_loader</span><span class="p">,</span><span class="n">valid_loader</span><span class="p">,</span><span class="n">test_loader</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="training-validation-test">
+<h2>Training, Validation, Test<a class="headerlink" href="#training-validation-test" title="Permalink to this headline">¶</a></h2>
+<p>With the data in required shape, The following shows the split into training, validation, and test sets.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">batch_size</span>  <span class="o">=</span> <span class="mi">15</span>
+<span class="n">shuffle</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;PMAT24_A_CR&#39;</span><span class="p">,</span><span class="s1">&#39;PicVocab_Unadj&#39;</span><span class="p">,</span><span class="s1">&#39;NEOFAC_A&#39;</span><span class="p">,</span><span class="s1">&#39;NEOFAC_O&#39;</span><span class="p">,</span><span class="s1">&#39;NEOFAC_C&#39;</span><span class="p">,</span><span class="s1">&#39;NEOFAC_E&#39;</span><span class="p">]</span>
+<span class="n">mov</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;testretest&#39;</span><span class="p">,</span> <span class="s1">&#39;twomen&#39;</span><span class="p">,</span> <span class="s1">&#39;bridgeville&#39;</span><span class="p">,</span> <span class="s1">&#39;pockets&#39;</span><span class="p">,</span> <span class="s1">&#39;overcome&#39;</span><span class="p">,</span> <span class="s1">&#39;inception&#39;</span><span class="p">,</span> <span class="s1">&#39;socialnet&#39;</span><span class="p">,</span> <span class="s1">&#39;oceans&#39;</span><span class="p">,</span> <span class="s1">&#39;flower&#39;</span><span class="p">,</span> <span class="s1">&#39;hotel&#39;</span><span class="p">,</span> <span class="s1">&#39;garden&#39;</span><span class="p">,</span> <span class="s1">&#39;dreary&#39;</span><span class="p">,</span> <span class="s1">&#39;homealone&#39;</span><span class="p">,</span> <span class="s1">&#39;brokovich&#39;</span><span class="p">,</span> <span class="s1">&#39;starwars&#39;</span><span class="p">]</span>
+<span class="n">movie</span> <span class="o">=</span> <span class="s1">&#39;starwars&#39;</span>
+<span class="n">seq_length</span>  <span class="o">=</span> <span class="n">TS</span><span class="p">[</span><span class="n">movie</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">cols</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="c1">#&#39;PMAT24_A_CR&#39;</span>
+
+<span class="n">train_loader</span><span class="p">,</span><span class="n">valid_loader</span><span class="p">,</span><span class="n">test_loader</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="n">score</span><span class="p">,</span><span class="n">movie</span><span class="p">,</span><span class="n">seq_length</span><span class="p">,</span><span class="n">shuffle</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>176
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">train_loader</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">valid_loader</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">test_loader</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(5, 2, 6)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">iter</span><span class="p">(</span><span class="n">train_loader</span><span class="p">)</span><span class="o">.</span><span class="n">next</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([15, 256, 300])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">is_cuda</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">is_cuda</span><span class="p">:</span>
+    <span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="models">
+<h2>Models<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="implementing-the-attention-model">
+<h3>Implementing the <code class="docutils literal notranslate"><span class="pre">Attention</span></code> Model<a class="headerlink" href="#implementing-the-attention-model" title="Permalink to this headline">¶</a></h3>
+<p>The following figures shows the idea behind it</p>
+<img alt="_images/attntion1.png" class="align-center" src="_images/attntion1.png" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Attention</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Attention</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">supports_masking</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bias</span>       <span class="o">=</span> <span class="n">bias</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hidden_dim</span> <span class="o">=</span> <span class="n">hidden_dim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span>    <span class="o">=</span> <span class="n">seq_len</span>
+        
+        <span class="n">weight</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">kaiming_uniform_</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span>
+        
+        <span class="n">context</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">seq_len</span><span class="p">,</span><span class="n">seq_len</span><span class="p">)</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">kaiming_uniform_</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weight</span>  <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">bias</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">seq_len</span><span class="p">))</span>
+        
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span><span class="n">mask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1">#print(x.shape,x.contiguous().view(-1, self.hidden_dim).shape)</span>
+        <span class="n">eij</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mm</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_dim</span> <span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="p">:</span>
+            <span class="n">eij</span> <span class="o">=</span> <span class="n">eij</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span>    
+        <span class="n">eij</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">eij</span><span class="p">)</span>
+        <span class="c1">#print(eij.shape)</span>
+        <span class="n">eij</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mm</span><span class="p">(</span><span class="n">eij</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span>
+        <span class="c1">#eij = torch.nn.functional.normalize(eij,p=2.5,dim=1)</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">eij</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">mask</span>
+
+        <span class="n">a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">/</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-10</span><span class="p">)</span>
+        <span class="n">weighted_input</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1">#weighted_input = torch.nn.functional.normalize(weighted_input,p=2.5,dim=0)</span>
+        <span class="c1">#x = torch.sum(weighted_input, 2)</span>
+        <span class="c1">#x = x.view(batch_size,seq_length,1)</span>
+        <span class="c1">#print(torch.sum(weighted_input, 2).eq(weighted_input))</span>
+        <span class="k">return</span> <span class="n">weighted_input</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="gru-classifier-model-as-described-in-the-paper">
+<h3><code class="docutils literal notranslate"><span class="pre">GRU</span> <span class="pre">Classifier</span></code> Model as described in the <a class="reference external" href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008943">paper</a><a class="headerlink" href="#gru-classifier-model-as-described-in-the-paper" title="Permalink to this headline">¶</a></h3>
+<img alt="_images/gru.png" src="_images/gru.png" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">GRU_RNN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_dim</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">,</span><span class="n">hidden_dim</span><span class="p">,</span><span class="n">seq_length</span><span class="p">,</span><span class="n">n_layers</span><span class="p">,</span><span class="n">att</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">drop_prob</span><span class="o">=</span><span class="mf">0.000001</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GRU_RNN</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_dim</span> <span class="o">=</span> <span class="n">output_dim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_layers</span>   <span class="o">=</span> <span class="n">n_layers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hidden_dim</span> <span class="o">=</span> <span class="n">hidden_dim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seq_length</span> <span class="o">=</span> <span class="n">seq_length</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">att</span>        <span class="o">=</span> <span class="n">att</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">gru</span>       <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">GRU</span><span class="p">(</span><span class="n">input_dim</span><span class="p">,</span><span class="n">hidden_dim</span><span class="p">,</span><span class="n">num_layers</span><span class="o">=</span><span class="n">n_layers</span><span class="p">,</span><span class="n">dropout</span><span class="o">=</span><span class="n">drop_prob</span><span class="p">,</span><span class="n">batch_first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">linear</span>    <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span><span class="n">output_dim</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">att</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">attention</span> <span class="o">=</span> <span class="n">Attention</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span><span class="n">seq_length</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span>   <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">func</span>      <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Softmax</span><span class="p">(</span><span class="n">dim</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">hidden</span><span class="p">,</span><span class="n">encoder_x</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span><span class="n">hidden</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gru</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">hidden</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">att</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attention</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="c1">#[:, -1, :]</span>
+        <span class="c1">#x = self.dropout(x)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">sig_out</span> <span class="o">=</span> <span class="n">x</span><span class="c1">#self.func(x)</span>
+        
+        <span class="k">return</span> <span class="n">sig_out</span><span class="p">,</span> <span class="n">hidden</span>
+    
+    <span class="k">def</span> <span class="nf">init_hidden</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
+        <span class="n">weight</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">hidden</span> <span class="o">=</span> <span class="n">weight</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_layers</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_dim</span><span class="p">)</span><span class="o">.</span><span class="n">zero_</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">hidden</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="training">
+<h2>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">net</span><span class="p">,</span><span class="n">valid_loader</span><span class="p">,</span><span class="n">optimzer</span><span class="p">,</span><span class="n">criterion</span><span class="p">,</span><span class="n">att</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="n">val_acc</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">tr_acc</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="n">clip</span> <span class="o">=</span> <span class="mi">4</span> <span class="c1"># gradient clipping</span>
+
+    <span class="n">net</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+    
+    <span class="n">valid_loss_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">Inf</span> 
+    
+    <span class="n">valid_losses</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">train_losses</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+        <span class="n">num_correct</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">init_hidden</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+        <span class="n">train_loss</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">valid_loss</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">train_acc</span>  <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">valid_acc</span>  <span class="o">=</span> <span class="mf">0.0</span> 
+        <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">train_loader</span><span class="p">:</span>
+            <span class="n">top_value</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="c1">#if counter == 65:</span>
+            <span class="c1">#    continue</span>
+            <span class="c1">#print(labels)</span>
+            <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">labels</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+            <span class="c1">#print(labels)</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="n">h</span><span class="o">.</span><span class="n">data</span>
+            <span class="n">net</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+
+            <span class="n">output</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+            <span class="c1">#output = output[:, -1, :]</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="c1">#print(output.shape,labels.shape)#view(batch_size,-1)</span>
+            
+            <span class="c1">#print(output[0])</span>
+            <span class="c1">#break</span>
+            <span class="c1">#pred = output#torch.round(output.squeeze()) </span>
+            <span class="c1">#print(pred)</span>
+            <span class="c1">#top_value, top_index = torch.max(output,1)</span>
+            <span class="c1">#print(top_value)</span>
+            <span class="c1">#print(labels.shape)</span>
+            <span class="c1">#print(top_value, top_index)</span>
+            <span class="n">correct_tensor</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">float</span><span class="p">())</span><span class="c1">#.view_as(top_index))</span>
+            <span class="n">correct</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">correct_tensor</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+            <span class="n">num_correct</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">correct</span><span class="p">)</span>
+
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+            <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">clip_grad_norm_</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">clip</span><span class="p">)</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+            <span class="n">train_loss</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+        <span class="n">tr_acc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">num_correct</span><span class="o">/</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">train_loader</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">batch_size</span><span class="p">))</span>
+
+
+
+        <span class="n">acc</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">val_h</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">init_hidden</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+        <span class="n">val_losses</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">net</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="n">num_correct</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">v_c</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">valid_loader</span><span class="p">:</span>
+            <span class="n">top_value</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">v_c</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">v_c</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">val_h</span> <span class="o">=</span> <span class="n">val_h</span><span class="o">.</span><span class="n">data</span>
+            <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">labels</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+            <span class="n">output</span><span class="p">,</span> <span class="n">val_h</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">val_h</span><span class="p">)</span>
+            
+            <span class="c1">#pred = torch.round(output.squeeze()) </span>
+            <span class="c1">#print(pred)</span>
+            <span class="c1">#top_value, top_index = torch.max(output,1)</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="c1">#output = output[:, -1, :]</span>
+            <span class="c1">#print(top_value.squeeze().shape,labels.shape)</span>
+            <span class="n">correct_tensor</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">float</span><span class="p">())</span><span class="c1">#.view_as(top_index))</span>
+            <span class="n">correct</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">correct_tensor</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+            <span class="n">num_correct</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">correct</span><span class="p">)</span>
+
+            <span class="n">val_loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">output</span><span class="p">,</span><span class="n">labels</span><span class="p">)</span>
+            <span class="n">val_losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val_loss</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+            
+            <span class="k">if</span> <span class="n">val_loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">valid_loss_min</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Validation loss decreased (</span><span class="si">{:.6f}</span><span class="s1"> --&gt; </span><span class="si">{:.6f}</span><span class="s1">).  Saving model ...&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">valid_loss_min</span><span class="p">,</span> <span class="n">val_loss</span><span class="o">.</span><span class="n">item</span><span class="p">()))</span>
+                <span class="n">best_epoch</span> <span class="o">=</span> <span class="n">e</span>
+                <span class="k">if</span> <span class="n">att</span><span class="p">:</span>
+                    <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="s1">&#39;RNN_GRU_Att.pt&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="s1">&#39;RNN_GRU.pt&#39;</span><span class="p">)</span>
+                <span class="n">valid_loss_min</span> <span class="o">=</span> <span class="n">val_loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+        <span class="n">net</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+        <span class="n">valid_losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">val_losses</span><span class="p">))</span>
+        <span class="n">train_losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">train_loss</span><span class="p">))</span>
+        <span class="n">val_acc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">num_correct</span><span class="o">/</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">valid_loader</span><span class="p">)</span><span class="o">*</span><span class="n">batch_size</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Epoch: </span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1"> </span><span class="se">\t</span><span class="s1">Training Loss: </span><span class="si">{:.6f}</span><span class="s1"> </span><span class="se">\t</span><span class="s1">Validation Loss: </span><span class="si">{:.6f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">epochs</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">train_loss</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">val_losses</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">train_losses</span><span class="p">,</span><span class="n">valid_losses</span><span class="p">,</span><span class="n">tr_acc</span><span class="p">,</span><span class="n">val_acc</span><span class="p">,</span><span class="n">best_epoch</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">epochs</span>     <span class="o">=</span> <span class="mi">50</span>
+<span class="n">input_dim</span>  <span class="o">=</span> <span class="mi">300</span>
+<span class="n">hidden_dim</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="n">output_dim</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">n_layers</span>   <span class="o">=</span> <span class="mi">2</span>
+<span class="n">lr</span>         <span class="o">=</span> <span class="mf">0.001</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="training-with-attention-layer">
+<h3>Training with Attention Layer<a class="headerlink" href="#training-with-attention-layer" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span>       <span class="o">=</span> <span class="n">GRU_RNN</span><span class="p">(</span><span class="n">input_dim</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">,</span> <span class="n">seq_length</span><span class="p">,</span> <span class="n">n_layers</span><span class="p">)</span>
+<span class="n">optimizer</span>   <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">)</span>
+<span class="n">criterion</span>   <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span><span class="c1">#nn.CrossEntropyLoss()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GRU_RNN(
+  (gru): GRU(300, 32, num_layers=2, batch_first=True, dropout=1e-06)
+  (linear): Linear(in_features=32, out_features=1, bias=True)
+  (attention): Attention()
+  (dropout): Dropout(p=0.3, inplace=False)
+  (func): Softmax(dim=-1)
+)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_losses</span><span class="p">,</span><span class="n">valid_losses</span><span class="p">,</span><span class="n">tr_acc</span><span class="p">,</span><span class="n">val_acc</span><span class="p">,</span><span class="n">best_epoch</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">model</span><span class="p">,</span><span class="n">valid_loader</span><span class="p">,</span><span class="n">optimizer</span><span class="p">,</span><span class="n">criterion</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Validation loss decreased (inf --&gt; 0.257673).  Saving model ...
+Epoch: 1/50 	Training Loss: 0.286488 	Validation Loss: 0.257673
+Epoch: 2/50 	Training Loss: 0.280433 	Validation Loss: 0.316165
+Validation loss decreased (0.257673 --&gt; 0.251178).  Saving model ...
+Epoch: 3/50 	Training Loss: 0.274186 	Validation Loss: 0.251178
+Epoch: 4/50 	Training Loss: 0.267696 	Validation Loss: 0.297428
+Epoch: 5/50 	Training Loss: 0.261043 	Validation Loss: 0.315165
+Validation loss decreased (0.251178 --&gt; 0.205194).  Saving model ...
+Epoch: 6/50 	Training Loss: 0.254432 	Validation Loss: 0.205194
+Epoch: 7/50 	Training Loss: 0.248019 	Validation Loss: 0.273160
+Epoch: 8/50 	Training Loss: 0.241906 	Validation Loss: 0.210738
+Validation loss decreased (0.205194 --&gt; 0.146092).  Saving model ...
+Epoch: 9/50 	Training Loss: 0.236110 	Validation Loss: 0.146092
+Epoch: 10/50 	Training Loss: 0.230786 	Validation Loss: 0.192430
+Epoch: 11/50 	Training Loss: 0.225379 	Validation Loss: 0.195375
+Epoch: 12/50 	Training Loss: 0.220217 	Validation Loss: 0.180195
+Epoch: 13/50 	Training Loss: 0.215143 	Validation Loss: 0.211803
+Epoch: 14/50 	Training Loss: 0.210270 	Validation Loss: 0.188610
+Epoch: 15/50 	Training Loss: 0.205536 	Validation Loss: 0.202779
+Epoch: 16/50 	Training Loss: 0.200807 	Validation Loss: 0.212532
+Epoch: 17/50 	Training Loss: 0.196173 	Validation Loss: 0.218790
+Epoch: 18/50 	Training Loss: 0.191852 	Validation Loss: 0.197626
+Epoch: 19/50 	Training Loss: 0.187407 	Validation Loss: 0.164204
+Epoch: 20/50 	Training Loss: 0.183197 	Validation Loss: 0.159777
+Epoch: 21/50 	Training Loss: 0.179030 	Validation Loss: 0.178199
+Epoch: 22/50 	Training Loss: 0.174925 	Validation Loss: 0.188819
+Validation loss decreased (0.146092 --&gt; 0.142498).  Saving model ...
+Epoch: 23/50 	Training Loss: 0.170952 	Validation Loss: 0.142498
+Validation loss decreased (0.142498 --&gt; 0.092746).  Saving model ...
+Epoch: 24/50 	Training Loss: 0.167033 	Validation Loss: 0.092746
+Epoch: 25/50 	Training Loss: 0.163186 	Validation Loss: 0.169806
+Epoch: 26/50 	Training Loss: 0.159561 	Validation Loss: 0.209635
+Epoch: 27/50 	Training Loss: 0.155821 	Validation Loss: 0.177396
+Epoch: 28/50 	Training Loss: 0.152250 	Validation Loss: 0.131027
+Epoch: 29/50 	Training Loss: 0.148791 	Validation Loss: 0.114624
+Epoch: 30/50 	Training Loss: 0.145360 	Validation Loss: 0.161044
+Epoch: 31/50 	Training Loss: 0.142018 	Validation Loss: 0.139625
+Epoch: 32/50 	Training Loss: 0.138715 	Validation Loss: 0.133467
+Epoch: 33/50 	Training Loss: 0.135485 	Validation Loss: 0.123082
+Validation loss decreased (0.092746 --&gt; 0.080021).  Saving model ...
+Epoch: 34/50 	Training Loss: 0.132414 	Validation Loss: 0.080021
+Epoch: 35/50 	Training Loss: 0.129426 	Validation Loss: 0.125307
+Epoch: 36/50 	Training Loss: 0.126262 	Validation Loss: 0.102738
+Epoch: 37/50 	Training Loss: 0.123493 	Validation Loss: 0.141353
+Epoch: 38/50 	Training Loss: 0.120603 	Validation Loss: 0.136588
+Epoch: 39/50 	Training Loss: 0.117775 	Validation Loss: 0.137666
+Epoch: 40/50 	Training Loss: 0.115090 	Validation Loss: 0.140739
+Epoch: 41/50 	Training Loss: 0.112334 	Validation Loss: 0.136764
+Epoch: 42/50 	Training Loss: 0.109801 	Validation Loss: 0.129736
+Epoch: 43/50 	Training Loss: 0.107244 	Validation Loss: 0.124063
+Epoch: 44/50 	Training Loss: 0.104780 	Validation Loss: 0.114008
+Validation loss decreased (0.080021 --&gt; 0.067614).  Saving model ...
+Epoch: 45/50 	Training Loss: 0.102341 	Validation Loss: 0.067614
+Epoch: 46/50 	Training Loss: 0.100035 	Validation Loss: 0.147952
+Epoch: 47/50 	Training Loss: 0.097631 	Validation Loss: 0.110288
+Epoch: 48/50 	Training Loss: 0.095388 	Validation Loss: 0.133669
+Epoch: 49/50 	Training Loss: 0.093171 	Validation Loss: 0.102219
+Epoch: 50/50 	Training Loss: 0.091158 	Validation Loss: 0.070159
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span>     <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">epochs</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+<span class="n">xi</span>    <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">epochs</span><span class="o">+</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">)]</span>
+<span class="n">xi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">f</span><span class="o">.</span><span class="n">set_figwidth</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">set_figheight</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">train_losses</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">valid_losses</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">best_epoch</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Epochs&quot;</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;Black&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;15&#39;</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Loss&quot;</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;Black&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;15&#39;</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Losses (with Attention)&quot;</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;Black&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;15&#39;</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s2">&quot;Training Loss&quot;</span><span class="p">,</span><span class="s2">&quot;Valid Loss&quot;</span><span class="p">,</span><span class="sa">f</span><span class="s2">&quot;Best Epoch= </span><span class="si">{</span><span class="n">best_epoch</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Losses </span><span class="si">{</span><span class="n">movie</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">score</span><span class="si">}</span><span class="s2">_att.png&quot;</span><span class="p">,</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/attention_2_29_0.png" src="_images/attention_2_29_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="training-without-attention-layer">
+<h3>Training without Attention Layer<a class="headerlink" href="#training-without-attention-layer" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span>     <span class="o">=</span> <span class="n">GRU_RNN</span><span class="p">(</span><span class="n">input_dim</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">,</span> <span class="n">seq_length</span><span class="p">,</span> <span class="n">n_layers</span><span class="p">,</span><span class="n">att</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">)</span>
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GRU_RNN(
+  (gru): GRU(300, 32, num_layers=2, batch_first=True, dropout=1e-06)
+  (linear): Linear(in_features=32, out_features=1, bias=True)
+  (dropout): Dropout(p=0.3, inplace=False)
+  (func): Softmax(dim=-1)
+)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_losses_1</span><span class="p">,</span><span class="n">valid_losses_1</span><span class="p">,</span><span class="n">tr_acc_1</span><span class="p">,</span><span class="n">val_acc_1</span><span class="p">,</span><span class="n">best_epoch</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span><span class="n">train_loader</span><span class="p">,</span><span class="n">model</span><span class="p">,</span><span class="n">valid_loader</span><span class="p">,</span><span class="n">optimizer</span><span class="p">,</span><span class="n">criterion</span><span class="p">,</span><span class="n">att</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Validation loss decreased (inf --&gt; 0.167020).  Saving model ...
+Epoch: 1/50 	Training Loss: 0.323667 	Validation Loss: 0.167020
+Validation loss decreased (0.167020 --&gt; 0.099445).  Saving model ...
+Epoch: 2/50 	Training Loss: 0.159237 	Validation Loss: 0.099445
+Validation loss decreased (0.099445 --&gt; 0.063748).  Saving model ...
+Epoch: 3/50 	Training Loss: 0.081085 	Validation Loss: 0.063748
+Epoch: 4/50 	Training Loss: 0.057170 	Validation Loss: 0.072026
+Epoch: 5/50 	Training Loss: 0.050083 	Validation Loss: 0.067528
+Epoch: 6/50 	Training Loss: 0.040832 	Validation Loss: 0.068751
+Validation loss decreased (0.063748 --&gt; 0.031609).  Saving model ...
+Epoch: 7/50 	Training Loss: 0.034273 	Validation Loss: 0.031609
+Epoch: 8/50 	Training Loss: 0.031803 	Validation Loss: 0.051059
+Epoch: 9/50 	Training Loss: 0.029840 	Validation Loss: 0.067352
+Epoch: 10/50 	Training Loss: 0.027361 	Validation Loss: 0.049163
+Epoch: 11/50 	Training Loss: 0.025961 	Validation Loss: 0.063297
+Epoch: 12/50 	Training Loss: 0.024705 	Validation Loss: 0.045974
+Validation loss decreased (0.031609 --&gt; 0.028233).  Saving model ...
+Epoch: 13/50 	Training Loss: 0.023546 	Validation Loss: 0.028233
+Epoch: 14/50 	Training Loss: 0.022756 	Validation Loss: 0.047366
+Epoch: 15/50 	Training Loss: 0.022124 	Validation Loss: 0.048143
+Epoch: 16/50 	Training Loss: 0.021317 	Validation Loss: 0.041395
+Epoch: 17/50 	Training Loss: 0.020788 	Validation Loss: 0.056296
+Epoch: 18/50 	Training Loss: 0.020148 	Validation Loss: 0.040662
+Epoch: 19/50 	Training Loss: 0.019668 	Validation Loss: 0.060474
+Epoch: 20/50 	Training Loss: 0.019035 	Validation Loss: 0.036490
+Epoch: 21/50 	Training Loss: 0.018451 	Validation Loss: 0.050615
+Epoch: 22/50 	Training Loss: 0.017692 	Validation Loss: 0.042593
+Epoch: 23/50 	Training Loss: 0.017361 	Validation Loss: 0.036193
+Epoch: 24/50 	Training Loss: 0.016848 	Validation Loss: 0.043882
+Epoch: 25/50 	Training Loss: 0.016398 	Validation Loss: 0.048144
+Validation loss decreased (0.028233 --&gt; 0.022774).  Saving model ...
+Epoch: 26/50 	Training Loss: 0.015820 	Validation Loss: 0.022774
+Epoch: 27/50 	Training Loss: 0.015286 	Validation Loss: 0.047615
+Epoch: 28/50 	Training Loss: 0.014578 	Validation Loss: 0.032980
+Epoch: 29/50 	Training Loss: 0.014845 	Validation Loss: 0.033604
+Epoch: 30/50 	Training Loss: 0.013680 	Validation Loss: 0.054207
+Epoch: 31/50 	Training Loss: 0.013350 	Validation Loss: 0.041292
+Epoch: 32/50 	Training Loss: 0.012615 	Validation Loss: 0.049510
+Epoch: 33/50 	Training Loss: 0.012068 	Validation Loss: 0.049801
+Epoch: 34/50 	Training Loss: 0.011644 	Validation Loss: 0.051813
+Epoch: 35/50 	Training Loss: 0.011507 	Validation Loss: 0.025887
+Epoch: 36/50 	Training Loss: 0.010915 	Validation Loss: 0.068562
+Epoch: 37/50 	Training Loss: 0.010239 	Validation Loss: 0.062498
+Epoch: 38/50 	Training Loss: 0.009942 	Validation Loss: 0.051498
+Epoch: 39/50 	Training Loss: 0.009017 	Validation Loss: 0.059416
+Epoch: 40/50 	Training Loss: 0.009033 	Validation Loss: 0.044734
+Epoch: 41/50 	Training Loss: 0.008434 	Validation Loss: 0.041929
+Epoch: 42/50 	Training Loss: 0.007863 	Validation Loss: 0.029082
+Epoch: 43/50 	Training Loss: 0.007404 	Validation Loss: 0.049933
+Epoch: 44/50 	Training Loss: 0.006944 	Validation Loss: 0.063979
+Epoch: 45/50 	Training Loss: 0.006818 	Validation Loss: 0.060668
+Epoch: 46/50 	Training Loss: 0.006422 	Validation Loss: 0.076857
+Epoch: 47/50 	Training Loss: 0.006154 	Validation Loss: 0.050200
+Epoch: 48/50 	Training Loss: 0.005820 	Validation Loss: 0.045543
+Epoch: 49/50 	Training Loss: 0.005322 	Validation Loss: 0.048257
+Epoch: 50/50 	Training Loss: 0.005149 	Validation Loss: 0.046131
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span>     <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">epochs</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+<span class="n">xi</span>    <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">epochs</span><span class="o">+</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">)]</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">f</span><span class="o">.</span><span class="n">set_figwidth</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">set_figheight</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">train_losses_1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">valid_losses_1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">best_epoch</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Epochs&quot;</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;Black&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;15&#39;</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Loss&quot;</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;Black&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;15&#39;</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Losses (without Attention)&quot;</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;Black&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;15&#39;</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s2">&quot;Training Loss&quot;</span><span class="p">,</span><span class="s2">&quot;Valid Loss&quot;</span><span class="p">,</span><span class="sa">f</span><span class="s2">&quot;Best Epoch= </span><span class="si">{</span><span class="n">best_epoch</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Losses </span><span class="si">{</span><span class="n">movie</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">score</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">,</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/attention_2_33_0.png" src="_images/attention_2_33_0.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">test_loader</span><span class="p">,</span><span class="n">net</span><span class="p">):</span>
+    <span class="n">v_c</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    <span class="n">num_correct</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">valid_acc</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">out</span>  <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">l_all</span> <span class="o">=</span><span class="p">[]</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">init_hidden</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">for</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">test_loader</span><span class="p">:</span>
+        <span class="n">v_c</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">v_c</span> <span class="o">==</span> <span class="mi">8</span><span class="p">):</span><span class="c1">#12, #6, #8</span>
+            <span class="k">continue</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">h</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">labels</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        
+        <span class="c1">#l_all.append(labels.cpu().detach().numpy())</span>
+        <span class="n">output</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+        <span class="c1">#print(output,labels)</span>
+        <span class="c1">#print(labels)</span>
+        <span class="c1">#pred = torch.round(output.squeeze()) </span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="n">labels</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">out</span>  <span class="o">=</span> <span class="n">output</span>
+            <span class="n">l_all</span> <span class="o">=</span> <span class="n">labels</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">out</span><span class="p">,</span><span class="n">output</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">l_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">l_all</span><span class="p">,</span><span class="n">labels</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span><span class="p">,</span><span class="n">l_all</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_scores</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span><span class="n">lbl</span><span class="p">):</span>
+    <span class="n">co</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">po</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">lbl</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">lbl</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">z</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">opt</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lbl</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">coef</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">spearmanr</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="n">m</span><span class="p">)</span>
+        <span class="n">co</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">coef</span><span class="p">)</span>
+        <span class="n">po</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">co</span><span class="p">,</span><span class="n">po</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#xa = DataLoader(ConcatDataset([train_data,test_data]),batch_size=batch_size)</span>
+<span class="c1">#xa = test_loader</span>
+<span class="n">xa</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">dl</span> <span class="ow">in</span> <span class="p">[</span><span class="n">valid_loader</span><span class="p">,</span> <span class="n">test_loader</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dl</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="prediction-with-attention-layer">
+<h3>Prediction with Attention Layer<a class="headerlink" href="#prediction-with-attention-layer" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">GRU_RNN</span><span class="p">(</span><span class="n">input_dim</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">,</span> <span class="n">seq_length</span><span class="p">,</span> <span class="n">n_layers</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;RNN_GRU_Att.pt&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;All keys matched successfully&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">out</span><span class="p">,</span><span class="n">l_all</span> <span class="o">=</span> <span class="n">test</span><span class="p">(</span><span class="n">xa</span><span class="p">,</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([15, 256]) torch.Size([15, 256])
+torch.Size([15, 256]) torch.Size([15, 256])
+torch.Size([15, 256]) torch.Size([15, 256])
+torch.Size([15, 256]) torch.Size([15, 256])
+torch.Size([15, 256]) torch.Size([15, 256])
+torch.Size([15, 256]) torch.Size([15, 256])
+torch.Size([15, 256]) torch.Size([15, 256])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coef</span><span class="p">,</span> <span class="n">p_val</span> <span class="o">=</span> <span class="n">get_scores</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">l_all</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">f</span><span class="o">.</span><span class="n">set_figwidth</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">set_figheight</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">seq_length</span><span class="p">)],</span><span class="n">coef</span><span class="p">);</span>
+<span class="c1">#plt.plot([x for x in range(seq_length)],coef1);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">coef</span><span class="p">),</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">coef</span><span class="p">),</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="nb">min</span><span class="p">(</span><span class="n">coef</span><span class="p">)</span><span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">coef</span><span class="p">)</span><span class="o">+</span><span class="mf">0.05</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">score</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">movie</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time Points&quot;</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;Black&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;15&#39;</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Spearman correlation&quot;</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;Black&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;15&#39;</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s2">&quot;Predected Spearman&quot;</span><span class="p">,</span><span class="sa">f</span><span class="s2">&quot;Max: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">coef</span><span class="p">),</span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span><span class="sa">f</span><span class="s2">&quot;Min: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">coef</span><span class="p">),</span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Spearman </span><span class="si">{</span><span class="n">movie</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">score</span><span class="si">}</span><span class="s2">_att_</span><span class="si">{</span><span class="n">shuffle</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">,</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/attention_2_42_0.png" src="_images/attention_2_42_0.png" />
+</div>
+</div>
+<p>f = plt.figure()
+f.set_figwidth(20)
+f.set_figheight(8)
+plt.plot([x for x in range(seq_length)],coef);
+plt.axhline(y = max(coef), color = ‘g’, linestyle = ‘-‘)
+plt.axhline(y = min(coef), color = ‘r’, linestyle = ‘-‘)
+plt.ylim(max(coef), min(coef));</p>
+</div>
+<div class="section" id="prediction-without-attention-layer">
+<h3>Prediction without Attention Layer<a class="headerlink" href="#prediction-without-attention-layer" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">GRU_RNN</span><span class="p">(</span><span class="n">input_dim</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">,</span> <span class="n">seq_length</span><span class="p">,</span> <span class="n">n_layers</span><span class="p">,</span><span class="n">att</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;RNN_GRU.pt&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;All keys matched successfully&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">out_1</span><span class="p">,</span><span class="n">l_all_1</span> <span class="o">=</span> <span class="n">test</span><span class="p">(</span><span class="n">xa</span><span class="p">,</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([15, 256]) torch.Size([15, 256])
+torch.Size([15, 256]) torch.Size([15, 256])
+torch.Size([15, 256]) torch.Size([15, 256])
+torch.Size([15, 256]) torch.Size([15, 256])
+torch.Size([15, 256]) torch.Size([15, 256])
+torch.Size([15, 256]) torch.Size([15, 256])
+torch.Size([15, 256]) torch.Size([15, 256])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coef_1</span><span class="p">,</span> <span class="n">p_val_1</span> <span class="o">=</span> <span class="n">get_scores</span><span class="p">(</span><span class="n">out_1</span><span class="p">,</span><span class="n">l_all_1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">f</span><span class="o">.</span><span class="n">set_figwidth</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">set_figheight</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">seq_length</span><span class="p">)],</span><span class="n">coef_1</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">coef_1</span><span class="p">),</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">coef_1</span><span class="p">),</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="nb">min</span><span class="p">(</span><span class="n">coef_1</span><span class="p">)</span><span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">coef_1</span><span class="p">)</span><span class="o">+</span><span class="mf">0.05</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">score</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">movie</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time Points&quot;</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;Black&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;15&#39;</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Spearman correlation&quot;</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;Black&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;15&#39;</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s2">&quot;Predected Spearman&quot;</span><span class="p">,</span><span class="sa">f</span><span class="s2">&quot;Max: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">coef</span><span class="p">),</span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span><span class="sa">f</span><span class="s2">&quot;Min: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">coef</span><span class="p">),</span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s2">&quot;Predected Spearman&quot;</span><span class="p">,</span><span class="sa">f</span><span class="s2">&quot;Max: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">coef_1</span><span class="p">),</span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span><span class="sa">f</span><span class="s2">&quot;Min: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">coef_1</span><span class="p">),</span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Spearman </span><span class="si">{</span><span class="n">movie</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">score</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">shuffle</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">,</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/attention_2_48_0.png" src="_images/attention_2_48_0.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="results">
+<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="spearman-correlation-rank">
+<h3>Spearman Correlation Rank<a class="headerlink" href="#spearman-correlation-rank" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="starwars-verbal-iq">
+<h4>Starwars || Verbal IQ<a class="headerlink" href="#starwars-verbal-iq" title="Permalink to this headline">¶</a></h4>
+<h3><center> Attention Model </center></h3>
+<img src="Spearman starwars_PicVocab_Unadj_att_False.png">
+<h3><center> Model in Paper</center></h3>
+<img src="Spearman starwars_PicVocab_Unadj_False.png"></div>
+<hr class="docutils" />
+<div class="section" id="starwars-fluid-intelligence">
+<h4>Starwars || Fluid Intelligence<a class="headerlink" href="#starwars-fluid-intelligence" title="Permalink to this headline">¶</a></h4>
+<h3> <center> Attention Model </center></h3>
+<img src="Spearman starwars_PMAT24_A_CR_att_False.png">
+<h3><center> Model in Paper</center></h3>
+<img src="Spearman starwars_PMAT24_A_CR_False.png"></div>
+</div>
+<div class="section" id="losses">
+<h3>Losses<a class="headerlink" href="#losses" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id1">
+<h4>Starwars || Verbal IQ<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<h3><center> Attention Model </center></h3>
+<img src="Losses starwars_PicVocab_Unadj_att.png">
+<h3><center> Model in Paper</center></h3>
+<img src="Losses starwars_PicVocab_Unadj.png"></div>
+<div class="section" id="id2">
+<h4>Starwars || Fluid Intelligence<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<h3> <center> Attention Model </center></h3>
+<img src="Losses starwars_PMAT24_A_CR_att.png">
+<h3><center> Model in Paper</center></h3>
+<img src="Losses starwars_PMAT24_A_CR.png"></div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="attention.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">GRU + Attention (with normalization)</p>
+        </div>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Akshat Yadav<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
